@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 using SISOC.Data.Data;
 using SISOC.Util.Configuration;
 using SISOCWEBAPI.Configurations;
@@ -27,7 +29,35 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerConfig();
 
-builder.Services.AddSwaggerConfig();
+builder.Services.AddMvc(option => option.EnableEndpointRouting = false)
+			  .AddNewtonsoftJson(opt =>
+			  {
+				  opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+				  opt.SerializerSettings.ContractResolver = new DefaultContractResolver();
+			  });
+
+builder.Services.AddCors(options =>
+{
+	// CORS de exemplo para desenvolvimento
+	options.AddPolicy("Development", builder => builder
+		.AllowAnyOrigin()
+		.AllowAnyMethod()
+		.AllowAnyHeader()
+		.SetIsOriginAllowed(origin => true) // fix para ASpNet Core 3.1 , desabilitar 'AllowCredentials()' 
+											//.AllowCredentials()
+	);
+
+	// CORS de exemplo para produção
+	// editar conforme necessidade
+	options.AddPolicy("Production", builder => builder
+	   .WithMethods("GET")
+	   .WithOrigins("http://desenvolvedor.io") // somente este site consegue fazer GET na api
+	   .SetIsOriginAllowedToAllowWildcardSubdomains() // permite outras aplicações sob o mesmo domínio
+													  //.WithHeaders(HeaderNames.ContentType, "x-custom-header") // obriga que a requisição tenha este header para ter permissão
+													  // usar outras configurações e restrições
+	.AllowAnyHeader());
+
+});
 
 builder.Services.ResolveDependecies();
 
@@ -71,8 +101,6 @@ else
 app.UseAuthentication();
 
 app.UseMiddleware<ExceptionMiddleware>();
-
-app.UseMvcConfiguration();
 
 app.UseSwaggerConfig(app.Environment);
 

@@ -1,11 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
+using SISOC.Business.Models;
 
 namespace SISOC.Data.Data
 {
 	public class SisocDbContext : DbContext
 	{
 		public SisocDbContext(DbContextOptions<SisocDbContext> options) : base(options) { }
+		public DbSet<Anexo> Anexos { get; set; }
+		public DbSet<Interacao> Interacaos { get; set; }
+		public DbSet<Modulo> Modulos { get; set; }
+		public DbSet<Ocorrencia> Ocorrencias { get; set; }
+		public DbSet<Permissao> Permissaos { get; set; }
+		public DbSet<Setor> Setors { get; set; }
+		public DbSet<TipoOcorrencia> TipoOcorrencias { get; set; }
+		public DbSet<TipoUsuario> TipoUsuarios { get; set; }
+		public DbSet<Usuario> Usuarios { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -37,12 +47,13 @@ namespace SISOC.Data.Data
 			{
 				if (entry.State == EntityState.Added)
 				{
-					entry.Property("DataCadastro").CurrentValue = DateTime.Now;
+					entry.Property("DataHoraCadastro").CurrentValue = DateTime.Now;
 				}
 
 				if (entry.State == EntityState.Modified)
 				{
-					entry.Property("DataCadastro").IsModified = false;
+					entry.Property("DataHoraCadastro").IsModified = false;
+					entry.Property("DataHoraAlteracao").CurrentValue = DateTime.Now;
 				}
 			}
 
