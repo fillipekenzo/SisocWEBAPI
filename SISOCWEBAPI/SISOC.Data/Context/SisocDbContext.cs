@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SISOC.Business.Models;
 
-namespace SISOC.Data.Data
+namespace SISOC.Data.Context
 {
 	public class SisocDbContext : DbContext
 	{
@@ -26,7 +26,7 @@ namespace SISOC.Data.Data
 				 e => e.GetProperties()
 					.Where(p => p.ClrType == typeof(string))))
 			{
-				property.SetColumnType("varchar(100)");
+				property.SetColumnType("nvarchar(255)");
 			}
 
 			modelBuilder.ApplyConfigurationsFromAssembly(typeof(SisocDbContext).Assembly);

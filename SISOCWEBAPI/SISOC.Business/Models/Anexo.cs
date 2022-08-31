@@ -11,8 +11,8 @@ namespace SISOC.Business.Models
 		public string Nome { get; set; }
 		public string TipoAnexo { get; set; }
 		public string ArquivoURL { get; set; }
-		public int InteracaoID { get; set; }
-		public int OcorrenciaID { get; set; }
+		public int? InteracaoID { get; set; }
+		public int? OcorrenciaID { get; set; }
 
 		[ForeignKey(nameof(InteracaoID))]
 		[InverseProperty("Anexos")]

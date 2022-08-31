@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SISOC.Data.Context;
 
@@ -11,9 +12,10 @@ using SISOC.Data.Context;
 namespace SISOC.Data.Migrations
 {
     [DbContext(typeof(SisocDbContext))]
-    partial class SisocDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220831060439_Permitir nulo em campos")]
+    partial class Permitirnuloemcampos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -343,6 +345,7 @@ namespace SISOC.Data.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<int?>("SetorID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("TipoUsuarioID")
@@ -443,7 +446,8 @@ namespace SISOC.Data.Migrations
                 {
                     b.HasOne("SISOC.Business.Models.Setor", "SetorNavigation")
                         .WithMany("Usuarios")
-                        .HasForeignKey("SetorID");
+                        .HasForeignKey("SetorID")
+                        .IsRequired();
 
                     b.HasOne("SISOC.Business.Models.TipoUsuario", "TipoUsuarioNavigation")
                         .WithMany("Usuarios")

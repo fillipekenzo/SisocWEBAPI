@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SISOC.Data.Context;
 
@@ -11,9 +12,10 @@ using SISOC.Data.Context;
 namespace SISOC.Data.Migrations
 {
     [DbContext(typeof(SisocDbContext))]
-    partial class SisocDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220831060047_Adequacoes modelagem")]
+    partial class Adequacoesmodelagem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,16 +42,14 @@ namespace SISOC.Data.Migrations
                     b.Property<DateTime>("DataHoraCadastro")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("InteracaoID")
-                        .IsRequired()
+                    b.Property<int>("InteracaoID")
                         .HasColumnType("int");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int?>("OcorrenciaID")
-                        .IsRequired()
+                    b.Property<int>("OcorrenciaID")
                         .HasColumnType("int");
 
                     b.Property<string>("TipoAnexo")
@@ -175,7 +175,7 @@ namespace SISOC.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int?>("UsuarioAtribuidoID")
+                    b.Property<int>("UsuarioAtribuidoID")
                         .HasColumnType("int");
 
                     b.Property<int>("UsuarioCadastroID")
@@ -342,11 +342,10 @@ namespace SISOC.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int?>("SetorID")
+                    b.Property<int>("SetorID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TipoUsuarioID")
-                        .IsRequired()
+                    b.Property<int>("TipoUsuarioID")
                         .HasColumnType("int");
 
                     b.HasKey("UsuarioID");
@@ -406,7 +405,8 @@ namespace SISOC.Data.Migrations
 
                     b.HasOne("SISOC.Business.Models.Usuario", "UsuarioAtribuidoNavigation")
                         .WithMany("OcorrenciasAtribuido")
-                        .HasForeignKey("UsuarioAtribuidoID");
+                        .HasForeignKey("UsuarioAtribuidoID")
+                        .IsRequired();
 
                     b.HasOne("SISOC.Business.Models.Usuario", "UsuarioCadastroNavigation")
                         .WithMany("OcorrenciasCadastro")
@@ -443,7 +443,8 @@ namespace SISOC.Data.Migrations
                 {
                     b.HasOne("SISOC.Business.Models.Setor", "SetorNavigation")
                         .WithMany("Usuarios")
-                        .HasForeignKey("SetorID");
+                        .HasForeignKey("SetorID")
+                        .IsRequired();
 
                     b.HasOne("SISOC.Business.Models.TipoUsuario", "TipoUsuarioNavigation")
                         .WithMany("Usuarios")

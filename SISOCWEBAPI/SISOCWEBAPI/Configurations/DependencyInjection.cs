@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
+﻿using SISOC.Business.Interface;
+using SISOC.Business.Notificacoes;
+using SISOC.Business.Service;
+using SISOC.Data.Context;
+using SISOC.Data.Repository;
 
 namespace SISOCWEBAPI.Configurations
 {
@@ -7,6 +10,10 @@ namespace SISOCWEBAPI.Configurations
 	{
 		public static IServiceCollection ResolveDependecies(this IServiceCollection services)
 		{
+			services.AddScoped<SisocDbContext>();
+			services.AddScoped<INotificador, Notificador>();
+			services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+			services.AddScoped<IUsuarioService, UsuarioService>();
 			return services;
 		}
 	}

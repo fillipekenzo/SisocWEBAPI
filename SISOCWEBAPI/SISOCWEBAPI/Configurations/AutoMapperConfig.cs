@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using SISOC.Business.Models;
+using SISOCWEBAPI.DTOs;
 
 namespace SISOCWEBAPI.Configurations
 {
@@ -6,7 +8,7 @@ namespace SISOCWEBAPI.Configurations
 	{
 		public AutoMapperConfig()
 		{
+			CreateMap<Usuario, UsuarioRegistroDTO>().ReverseMap();
 		}
-
 	}
 }

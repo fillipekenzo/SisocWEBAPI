@@ -1,4 +1,4 @@
-﻿namespace SISOC.Business.Interface
+﻿namespace SISOC.Business.Models.Interface
 {
 	public interface IEntity
 	{

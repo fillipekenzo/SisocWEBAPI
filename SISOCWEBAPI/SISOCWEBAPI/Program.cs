@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
-using SISOC.Data.Data;
+using SISOC.Data.Context;
 using SISOC.Util.Configuration;
 using SISOCWEBAPI.Configurations;
 using SISOCWEBAPI.Extensions;
@@ -19,6 +18,13 @@ new ConfigureFromConfigurationOptions<TokenConfiguration>(
 var signingConfigurations = new SigningConfiguration();
 
 // Add services to the container (ConfigureServices).
+builder.Configuration
+	.SetBasePath(builder.Environment.ContentRootPath)
+	.AddJsonFile("appsettings.json", true, true)
+	.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true)
+	.AddEnvironmentVariables();
+
+
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 builder.Services.AddDbContext<SisocDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -87,20 +93,18 @@ builder.Services.AddAuthentication(authOptions =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
-	app.UseCors("Desenvolvimento");
 	app.UseDeveloperExceptionPage();
 }
 else
 {
-	app.UseCors("Production");
+	app.UseExceptionHandler("/erro/500");
+	app.UseStatusCodePagesWithRedirects("/erro/{0}");
 	app.UseHsts();
 }
 
-app.UseAuthentication();
-
-app.UseMiddleware<ExceptionMiddleware>();
+//app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseSwaggerConfig(app.Environment);
 
@@ -109,6 +113,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
