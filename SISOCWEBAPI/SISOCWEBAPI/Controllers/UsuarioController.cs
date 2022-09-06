@@ -8,9 +8,12 @@ using SISOC.Business.Models;
 using SISOC.Business.Models.Validation;
 using SISOCWEBAPI.DTOs;
 using SISOCWEBAPI.Extensions;
+using SISOCWEBAPI.ViewModels;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Text;
 
 namespace SISOCWEBAPI.Controllers
@@ -43,7 +46,6 @@ namespace SISOCWEBAPI.Controllers
 			try
 			{
 				if (!ModelState.IsValid) return CustomResponse(ModelState);
-
 
 				UsuarioValidation validator = new UsuarioValidation();
 				var resultValidateUser = validator.Validate(_mapper.Map<Usuario>(usuarioRegistroDTO));
@@ -83,6 +85,74 @@ namespace SISOCWEBAPI.Controllers
 				NotificarErro(ex.Message);
 				return CustomResponse(ex);
 			}
+		}
+
+		[HttpPost("login")]
+		public async Task<ActionResult> Login(UsuarioLoginDTO usuarioLoginDTO)
+		{
+			try
+			{
+				if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+				var user = _usuarioRepository.Buscar(u => u.Email == usuarioLoginDTO.Email).Result.FirstOrDefault();
+
+				if (!_usuarioRepository.Buscar(u => u.Email == usuarioLoginDTO.Email).Result.Any())
+				{
+					NotificarErro("O E-mail ou Senha incorretos.");
+					return CustomResponse();
+				}
+
+				var result = await _usuarioService.Login(_mapper.Map<Usuario>(usuarioLoginDTO));
+
+				if (result == null)
+				{
+					NotificarErro("O E-mail ou Senha incorretos.");
+					return CustomResponse();
+				}
+				else
+				{
+					var tokenHandler = new JwtSecurityTokenHandler();
+					var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+
+					ClaimsIdentity identity = new ClaimsIdentity(
+						   new GenericIdentity(result.UsuarioID.ToString(), "Login"),
+						   new[] {
+							new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
+							new Claim(JwtRegisteredClaimNames.UniqueName, result.UsuarioID.ToString())
+						   }
+					   );
+
+					var securityTokenDescriptor = new SecurityTokenDescriptor
+					{
+						Issuer = _appSettings.Emissor,
+						Audience = _appSettings.ValidoEm,
+						Subject = identity,
+						Expires = DateTime.UtcNow.AddHours(_appSettings.ExpiracaoHoras),
+						SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+					};
+
+					var token = tokenHandler.CreateToken(securityTokenDescriptor);
+					var encodedeToken = tokenHandler.WriteToken(token);
+					var response = new ResponseViewModel
+					{
+						AccessToken = encodedeToken,
+						ExpiresIn = TimeSpan.FromHours(_appSettings.ExpiracaoHoras).TotalSeconds,
+						UserToken = new UsuarioViewModel
+						{
+							UsuarioID = result.UsuarioID,
+							Email = result.Email,
+							TipoUsuario = result.TipoUsuarioNavigation
+						}
+					};
+					return CustomResponse(response);
+				}
+			}
+			catch (Exception ex)
+			{
+				NotificarErro(ex.Message);
+				return CustomResponse(ex);
+			}
+
 		}
 
 		//[HttpPut]
@@ -135,58 +205,7 @@ namespace SISOCWEBAPI.Controllers
 		//	}
 		//}
 
-		//[HttpPost("login")]
-		//public async Task<ActionResult> Login(LoginViewModel loginViewModel)
-		//{
-		//	if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-		//	var result = await _signInManager.PasswordSignInAsync(loginViewModel.Email, loginViewModel.Password, isPersistent: false, lockoutOnFailure: true);
-		//	var user = await _aspNetUserService.GetUserPorEmail(loginViewModel.Email);
-		//	if (result.Succeeded)
-		//	{
-		//		if (!_env.IsDevelopment())
-		//		{
-		//			if (user.EmailConfirmed)
-		//			{
-		//				await _logAtividadeService.Adicionar(new LogAtividade
-		//				{
-		//					CpfUsuario = user.CPF,
-		//					UserID = user.Id,
-		//					NomeUsuario = loginViewModel.Email,
-		//					TipoAtividade = "Login",
-		//					UsuarioInclusao = user.Nome
-		//				});
-		//			}
-		//			else
-		//			{
-		//				NotificarErro("Usuário precisa confirmar e-mail!");
-		//			}
-		//		}
-		//		else
-		//		{
-		//			await _logAtividadeService.Adicionar(new LogAtividade
-		//			{
-		//				CpfUsuario = user.CPF,
-		//				UserID = user.Id,
-		//				NomeUsuario = loginViewModel.Email,
-		//				TipoAtividade = "Login",
-		//				UsuarioInclusao = user.Nome
-		//			});
-		//		}
-
-		//		return CustomResponse(user);
-		//	}
-
-		//	if (result.IsLockedOut)
-		//	{
-		//		var tempoRestante = user.LockoutEnd.Value.LocalDateTime - DateTime.Now;
-		//		NotificarErro($"Usuário temporariamente bloqueado durante {tempoRestante.Minutes} minutos e {tempoRestante.Seconds} segundos por tentativas inválidas");
-		//		return CustomResponse(loginViewModel);
-		//	}
-
-		//	NotificarErro("Usuário ou senha Incorretos!");
-		//	return CustomResponse(loginViewModel);
-		//}
 
 		//[HttpGet("esqueciSenha")]
 		//public async Task<ActionResult> EsqueciSenha(string cpf, string email)

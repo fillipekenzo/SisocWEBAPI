@@ -15,4 +15,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SISOC.Util\SISOC.Util.csproj" />
+  </ItemGroup>
+
 </Project>

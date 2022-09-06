@@ -7,6 +7,7 @@ using SISOC.Data.Context;
 using SISOC.Util.Configuration;
 using SISOCWEBAPI.Configurations;
 using SISOCWEBAPI.Extensions;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -68,6 +69,10 @@ builder.Services.AddCors(options =>
 builder.Services.ResolveDependecies();
 
 //JWT
+var appSettingsSection = builder.Configuration.GetSection("AppSettings");
+
+builder.Services.Configure<AppSettings>(appSettingsSection);
+
 builder.Services.AddSingleton(signingConfigurations);
 
 builder.Services.AddSingleton(tokenConfigurations);

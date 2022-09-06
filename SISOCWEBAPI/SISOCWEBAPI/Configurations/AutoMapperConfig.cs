@@ -9,6 +9,7 @@ namespace SISOCWEBAPI.Configurations
 		public AutoMapperConfig()
 		{
 			CreateMap<Usuario, UsuarioRegistroDTO>().ReverseMap();
+			CreateMap<Usuario, UsuarioLoginDTO>().ReverseMap();
 		}
 	}
 }
