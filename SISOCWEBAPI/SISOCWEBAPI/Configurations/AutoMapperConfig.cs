@@ -10,6 +10,7 @@ namespace SISOCWEBAPI.Configurations
 		{
 			CreateMap<Usuario, UsuarioRegistroDTO>().ReverseMap();
 			CreateMap<Usuario, UsuarioLoginDTO>().ReverseMap();
+			CreateMap<Setor, SetorDTO>().ReverseMap();
 		}
 	}
 }

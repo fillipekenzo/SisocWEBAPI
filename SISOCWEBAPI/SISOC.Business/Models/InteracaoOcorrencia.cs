@@ -3,30 +3,30 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SISOC.Business.Models
 {
-	[Table("Interacao")]
-	public partial class Interacao : Entity
+	[Table("InteracaoOcorrencia")]
+	public partial class InteracaoOcorrencia : Entity
 	{
 		[Key]
-		public int InteracaoID { get; set; }
+		public int InteracaoOcorrenciaID { get; set; }
 		public string Assunto { get; set; }
 		public string Descricao { get; set; }
 		public int UsuarioID { get; set; }
 		public int OcorrenciaID { get; set; }
 
 		[ForeignKey(nameof(UsuarioID))]
-		[InverseProperty("Interacaos")]
+		[InverseProperty("InteracaoOcorrencias")]
 		public virtual Usuario UsuarioNavigation { get; set; }
 
 		[ForeignKey(nameof(OcorrenciaID))]
-		[InverseProperty("Interacaos")]
+		[InverseProperty("InteracaoOcorrencias")]
 		public virtual Ocorrencia OcorrenciaNavigation { get; set; }
 
-		[InverseProperty(nameof(Anexo.InteracaoNavigation))]
+		[InverseProperty(nameof(Anexo.InteracaoOcorrenciaNavigation))]
 		public virtual ICollection<Anexo> Anexos { get; set; }
 
 		public override void SetId(int id)
 		{
-			InteracaoID = id;
+			InteracaoOcorrenciaID = id;
 		}
 	}
 }

@@ -22,8 +22,8 @@ namespace SISOC.Business.Models
 		[InverseProperty("Usuarios")]
 		public virtual Setor SetorNavigation { get; set; }
 
-		[InverseProperty(nameof(Interacao.UsuarioNavigation))]
-		public virtual ICollection<Interacao> Interacaos { get; set; }
+		[InverseProperty(nameof(InteracaoOcorrencia.UsuarioNavigation))]
+		public virtual ICollection<InteracaoOcorrencia> InteracaoOcorrencias { get; set; }
 
 		[InverseProperty(nameof(Ocorrencia.UsuarioCadastroNavigation))]
 		public virtual ICollection<Ocorrencia> OcorrenciasCadastro { get; set; }

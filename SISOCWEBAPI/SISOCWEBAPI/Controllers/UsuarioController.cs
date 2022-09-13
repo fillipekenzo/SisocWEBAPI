@@ -88,7 +88,7 @@ namespace SISOCWEBAPI.Controllers
 		}
 
 		[HttpPost("login")]
-		public async Task<ActionResult> Login(UsuarioLoginDTO usuarioLoginDTO)
+		public async Task<ActionResult> Login([FromBody] UsuarioLoginDTO usuarioLoginDTO)
 		{
 			try
 			{
@@ -141,6 +141,7 @@ namespace SISOCWEBAPI.Controllers
 						{
 							UsuarioID = result.UsuarioID,
 							Email = result.Email,
+							Nome = result.Nome,
 							TipoUsuario = result.TipoUsuarioNavigation
 						}
 					};

@@ -4,9 +4,9 @@ using SISOC.Business.Models;
 
 namespace SISOC.Data.Mappings
 {
-	public class InteracaoMapping : IEntityTypeConfiguration<Interacao>
+	public class InteracaoMapping : IEntityTypeConfiguration<InteracaoOcorrencia>
 	{
-		public void Configure(EntityTypeBuilder<Interacao> builder)
+		public void Configure(EntityTypeBuilder<InteracaoOcorrencia> builder)
 		{
 			builder.Property(c => c.Assunto)
 				.IsRequired()

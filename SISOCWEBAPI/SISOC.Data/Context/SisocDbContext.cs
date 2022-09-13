@@ -8,7 +8,7 @@ namespace SISOC.Data.Context
 	{
 		public SisocDbContext(DbContextOptions<SisocDbContext> options) : base(options) { }
 		public DbSet<Anexo> Anexos { get; set; }
-		public DbSet<Interacao> Interacaos { get; set; }
+		public DbSet<InteracaoOcorrencia> Interacaos { get; set; }
 		public DbSet<Modulo> Modulos { get; set; }
 		public DbSet<Ocorrencia> Ocorrencias { get; set; }
 		public DbSet<Permissao> Permissaos { get; set; }
@@ -43,7 +43,7 @@ namespace SISOC.Data.Context
 
 		public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
 		{
-			foreach (var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("DataCadastro") != null))
+			foreach (var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("DataHoraCadastro") != null))
 			{
 				if (entry.State == EntityState.Added)
 				{

@@ -12,8 +12,21 @@ namespace SISOCWEBAPI.Configurations
 		{
 			services.AddScoped<SisocDbContext>();
 			services.AddScoped<INotificador, Notificador>();
+
+			// Repository
+			services.AddScoped<IAnexoRepository, AnexoRepository>();
+			services.AddScoped<IInteracaoOcorrenciaRepository, InteracaoOcorrenciaRepository>();
+			services.AddScoped<IModuloRepository, ModuloRepository>();
+			services.AddScoped<IOcorrenciaRepository, OcorrenciaRepository>();
+			services.AddScoped<IPermissaoRepository, PermissaoRepository>();
+			services.AddScoped<ISetorRepository, SetorRepository>();
+			services.AddScoped<ITipoOcorrenciaRepository, TipoOcorrenciaRepository>();
+			services.AddScoped<ITipoUsuarioRepository, TipoUsuarioRepository>();
 			services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+
+			// Service
 			services.AddScoped<IUsuarioService, UsuarioService>();
+
 			return services;
 		}
 	}
