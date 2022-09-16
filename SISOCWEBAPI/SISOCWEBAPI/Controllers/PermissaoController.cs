@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SISOC.Business.Interface;
 using SISOC.Business.Models;
+using SISOCWEBAPI.DTOs;
 
 namespace SISOCWEBAPI.Controllers
 {
@@ -37,11 +38,11 @@ namespace SISOCWEBAPI.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post(Permissao permissao)
+		public async Task<IActionResult> Post([FromBody] PermissaoDTO permissaoDTO)
 		{
 			try
 			{
-				await _permissaoRepository.Adicionar(_mapper.Map<Permissao>(permissao));
+				await _permissaoRepository.Adicionar(_mapper.Map<Permissao>(permissaoDTO));
 				return CustomResponse();
 			}
 			catch (Exception ex)
@@ -52,11 +53,11 @@ namespace SISOCWEBAPI.Controllers
 		}
 
 		[HttpPut]
-		public async Task<IActionResult> Put(Permissao permissao)
+		public async Task<IActionResult> Put([FromBody] PermissaoDTO permissaoDTO)
 		{
 			try
 			{
-				await _permissaoRepository.Atualizar(_mapper.Map<Permissao>(permissao));
+				await _permissaoRepository.Atualizar(_mapper.Map<Permissao>(permissaoDTO));
 				return CustomResponse();
 			}
 			catch (Exception ex)

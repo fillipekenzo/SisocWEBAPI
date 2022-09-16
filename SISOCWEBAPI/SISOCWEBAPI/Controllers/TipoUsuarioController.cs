@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SISOC.Business.Interface;
 using SISOC.Business.Models;
+using SISOCWEBAPI.DTOs;
 
 namespace SISOCWEBAPI.Controllers
 {
@@ -37,11 +38,11 @@ namespace SISOCWEBAPI.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post(TipoUsuario tipoUsuario)
+		public async Task<IActionResult> Post([FromBody] TipoUsuarioDTO tipoUsuarioDTO)
 		{
 			try
 			{
-				await _tipoUsuarioRepository.Adicionar(_mapper.Map<TipoUsuario>(tipoUsuario));
+				await _tipoUsuarioRepository.Adicionar(_mapper.Map<TipoUsuario>(tipoUsuarioDTO));
 				return CustomResponse();
 			}
 			catch (Exception ex)
@@ -52,11 +53,11 @@ namespace SISOCWEBAPI.Controllers
 		}
 
 		[HttpPut]
-		public async Task<IActionResult> Put(TipoUsuario tipoUsuario)
+		public async Task<IActionResult> Put([FromBody] TipoUsuarioDTO tipoUsuarioDTO)
 		{
 			try
 			{
-				await _tipoUsuarioRepository.Atualizar(_mapper.Map<TipoUsuario>(tipoUsuario));
+				await _tipoUsuarioRepository.Atualizar(_mapper.Map<TipoUsuario>(tipoUsuarioDTO));
 				return CustomResponse();
 			}
 			catch (Exception ex)

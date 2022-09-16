@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SISOC.Business.Interface;
 using SISOC.Business.Models;
+using SISOCWEBAPI.DTOs;
 
 namespace SISOCWEBAPI.Controllers
 {
@@ -37,11 +38,11 @@ namespace SISOCWEBAPI.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post(Anexo anexo)
+		public async Task<IActionResult> Post([FromBody] AnexoDTO anexoDTO)
 		{
 			try
 			{
-				await _anexoRepository.Adicionar(_mapper.Map<Anexo>(anexo));
+				await _anexoRepository.Adicionar(_mapper.Map<Anexo>(anexoDTO));
 				return CustomResponse();
 			}
 			catch (Exception ex)
@@ -52,11 +53,11 @@ namespace SISOCWEBAPI.Controllers
 		}
 
 		[HttpPut]
-		public async Task<IActionResult> Put(Anexo anexo)
+		public async Task<IActionResult> Put([FromBody] AnexoDTO anexoDTO)
 		{
 			try
 			{
-				await _anexoRepository.Atualizar(_mapper.Map<Anexo>(anexo));
+				await _anexoRepository.Atualizar(_mapper.Map<Anexo>(anexoDTO));
 				return CustomResponse();
 			}
 			catch (Exception ex)

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SISOC.Business.Interface;
 using SISOC.Business.Models;
+using SISOCWEBAPI.DTOs;
 
 namespace SISOCWEBAPI.Controllers
 {
@@ -37,11 +38,11 @@ namespace SISOCWEBAPI.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post(InteracaoOcorrencia interacaoOcorrencia)
+		public async Task<IActionResult> Post([FromBody] InteracaoOcorrenciaDTO interacaoOcorrenciaDTO)
 		{
 			try
 			{
-				await _interacaoOcorrenciaRepository.Adicionar(_mapper.Map<InteracaoOcorrencia>(interacaoOcorrencia));
+				await _interacaoOcorrenciaRepository.Adicionar(_mapper.Map<InteracaoOcorrencia>(interacaoOcorrenciaDTO));
 				return CustomResponse();
 			}
 			catch (Exception ex)
@@ -52,11 +53,11 @@ namespace SISOCWEBAPI.Controllers
 		}
 
 		[HttpPut]
-		public async Task<IActionResult> Put(InteracaoOcorrencia interacaoOcorrencia)
+		public async Task<IActionResult> Put([FromBody] InteracaoOcorrenciaDTO interacaoOcorrenciaDTO)
 		{
 			try
 			{
-				await _interacaoOcorrenciaRepository.Atualizar(_mapper.Map<InteracaoOcorrencia>(interacaoOcorrencia));
+				await _interacaoOcorrenciaRepository.Atualizar(_mapper.Map<InteracaoOcorrencia>(interacaoOcorrenciaDTO));
 				return CustomResponse();
 			}
 			catch (Exception ex)

@@ -11,6 +11,13 @@ namespace SISOCWEBAPI.Configurations
 			CreateMap<Usuario, UsuarioRegistroDTO>().ReverseMap();
 			CreateMap<Usuario, UsuarioLoginDTO>().ReverseMap();
 			CreateMap<Setor, SetorDTO>().ReverseMap();
+			CreateMap<Anexo, AnexoDTO>().ReverseMap();
+			CreateMap<InteracaoOcorrencia, InteracaoOcorrenciaDTO>().ReverseMap();
+			CreateMap<Modulo, ModuloDTO>().ReverseMap();
+			CreateMap<Ocorrencia, OcorrenciaDTO>().ReverseMap();
+			CreateMap<Permissao, PermissaoDTO>().ReverseMap();
+			CreateMap<TipoOcorrencia, TipoOcorrenciaDTO>().ReverseMap();
+			CreateMap<TipoUsuario, TipoUsuarioDTO>().ReverseMap();
 		}
 	}
 }
