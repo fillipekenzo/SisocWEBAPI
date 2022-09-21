@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using SISOC.Business.Interface;
 using SISOC.Business.Models;
 using SISOC.Business.Models.Validation;
+using SISOC.Data.Repository;
 using SISOCWEBAPI.DTOs;
 using SISOCWEBAPI.Extensions;
 using SISOCWEBAPI.ViewModels;
@@ -155,56 +156,50 @@ namespace SISOCWEBAPI.Controllers
 			}
 
 		}
-
-		//[HttpPut]
-		//public async Task<ActionResult> Put([FromBody] UserViewModel updateUser)
-		//{
-		//	try
-		//	{
-		//		if (!ModelState.IsValid) return CustomResponse(ModelState);
-
-		//		ApplicationUser user = _aspNetUserRepository.Buscar((u) => u.Id == updateUser.Id).GetAwaiter().GetResult().FirstOrDefault();
-		//		user.CPF = updateUser.CPF;
-		//		user.Nome = updateUser.Nome;
-		//		user.Email = updateUser.Email;
-		//		user.UserName = updateUser.Email;
-
-		//		ApplicationUserValidation validator = new ApplicationUserValidation();
-		//		ValidationResult resultValidateUser = validator.Validate(user);
-
-		//		if (!resultValidateUser.IsValid)
-		//		{
-		//			NotificarErro(resultValidateUser.Errors.FirstOrDefault().ErrorMessage);
-		//			return CustomResponse();
-		//		}
+		[HttpGet]
+		public async Task<ActionResult<List<Usuario>>> Get()
+		{
+			var usuarios = await _usuarioRepository.ObterTodos();
+			return CustomResponse(usuarios.ToList());
+		}
 
 
-		//		if (_aspNetUserRepository.Buscar((u) => u.CPF == updateUser.CPF
-		//		&& u.Id != updateUser.Id).GetAwaiter().GetResult().Any())
-		//		{
-		//			NotificarErro("CPF informado já consta nos dados de outro usuário");
-		//			return CustomResponse();
-		//		}
+		[HttpGet]
+		[Route("getbyid")]
+		public async Task<ActionResult<Usuario>> GetByID(int id)
+		{
+			Usuario usuario = await _usuarioRepository.ObterPorID(id);
+			return CustomResponse(usuario);
+		}
 
-		//		var result = await _userManager.UpdateAsync(user);
+		[HttpPut]
+		public async Task<IActionResult> Put([FromBody] UsuarioDTO usuarioDTO)
+		{
+			try
+			{
+				await _usuarioRepository.Atualizar(_mapper.Map<Usuario>(usuarioDTO));
+				return CustomResponse();
+			}
+			catch (Exception ex)
+			{
+				NotificarErro(ex.Message);
+				return CustomResponse();
+			}
+		}
 
-		//		if (!result.Succeeded)
-		//		{
-		//			NotificarErro(result.Errors.FirstOrDefault().Description);
-		//			return CustomResponse();
-		//		}
-
-		//		if (!_env.IsDevelopment())
-		//			await _aspNetUserService.EnviarEmailLinkConfirmacao(user);
-
-		//		return CustomResponse(updateUser);
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		NotificarErro(ex.Message);
-		//		return CustomResponse(ex);
-		//	}
-		//}
+		[HttpDelete]
+		public async Task<IActionResult> Delete(int id)
+		{
+			try
+			{
+				return CustomResponse(_usuarioRepository.Remover(id));
+			}
+			catch (Exception ex)
+			{
+				NotificarErro(ex.Message);
+				return CustomResponse();
+			}
+		}
 
 
 

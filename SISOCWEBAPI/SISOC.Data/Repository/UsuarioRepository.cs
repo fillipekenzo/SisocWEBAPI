@@ -26,5 +26,17 @@ namespace SISOC.Data.Repository
 				throw ex;
 			}
 		}
+
+		public override async Task<List<Usuario>> ObterTodos()
+		{
+			try
+			{
+				return await Db.Usuarios.Include(i => i.TipoUsuarioNavigation).Include(i => i.SetorNavigation).ToListAsync();
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
 	}
 }
