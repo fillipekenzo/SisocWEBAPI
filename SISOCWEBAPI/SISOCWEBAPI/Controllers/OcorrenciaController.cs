@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SISOC.Business.Interface;
 using SISOC.Business.Models;
 using SISOCWEBAPI.DTOs;
+using SISOCWEBAPI.ViewModels;
 
 namespace SISOCWEBAPI.Controllers
 {
@@ -22,10 +23,10 @@ namespace SISOCWEBAPI.Controllers
 			_mapper = mapper;
 		}
 		[HttpGet]
-		public async Task<ActionResult<List<Ocorrencia>>> Get()
+		public async Task<ActionResult<List<OcorrenciaViewModel>>> Get()
 		{
-			var modulos = await _ocorrenciaRepository.ObterTodos();
-			return CustomResponse(modulos.ToList());
+			var ocorrencias = _mapper.Map<List<OcorrenciaViewModel>>(await _ocorrenciaRepository.ObterTodos());
+			return CustomResponse(ocorrencias);
 		}
 
 

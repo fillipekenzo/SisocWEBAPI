@@ -17,7 +17,7 @@ namespace SISOC.Data.Mappings
 				.HasColumnType("nvarchar(MAX)");
 
 			builder.Property(c => c.Resolucao)
-				.IsRequired()
+				.IsRequired(false)
 				.HasColumnType("nvarchar(MAX)");
 		}
 	}

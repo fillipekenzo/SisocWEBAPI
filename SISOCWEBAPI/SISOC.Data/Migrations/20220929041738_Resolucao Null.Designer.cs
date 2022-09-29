@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SISOC.Data.Context;
 
@@ -11,9 +12,10 @@ using SISOC.Data.Context;
 namespace SISOC.Data.Migrations
 {
     [DbContext(typeof(SisocDbContext))]
-    partial class SisocDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220929041738_Resolucao Null")]
+    partial class ResolucaoNull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -158,6 +160,7 @@ namespace SISOC.Data.Migrations
                         .HasColumnType("nvarchar(MAX)");
 
                     b.Property<string>("Resolucao")
+                        .IsRequired()
                         .HasColumnType("nvarchar(MAX)");
 
                     b.Property<int>("SetorID")
