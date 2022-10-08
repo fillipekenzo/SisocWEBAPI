@@ -16,7 +16,7 @@ namespace SISOCWEBAPI.Configurations
 			// Repository
 			services.AddScoped<IAnexoRepository, AnexoRepository>();
 			services.AddScoped<IInteracaoOcorrenciaRepository, InteracaoOcorrenciaRepository>();
-			services.AddScoped<IModuloRepository, ModuloRepository>();
+			services.AddScoped<IMenuRepository, MenuRepository>();
 			services.AddScoped<IOcorrenciaRepository, OcorrenciaRepository>();
 			services.AddScoped<IPermissaoRepository, PermissaoRepository>();
 			services.AddScoped<ISetorRepository, SetorRepository>();

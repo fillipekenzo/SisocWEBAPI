@@ -2,7 +2,7 @@
 
 namespace SISOCWEBAPI.DTOs
 {
-	public class ModuloDTO
+	public class MenuDTO
 	{
 		[Key]
 		public int ModuloID { get; set; }
@@ -10,5 +10,6 @@ namespace SISOCWEBAPI.DTOs
 		public string NavegarURL { get; set; }
 		public bool Ativo { get; set; }
 		public bool PossuiMenu { get; set; }
+        public int? Ordem { get; set; }
 	}
 }

@@ -7,9 +7,9 @@ using System.Linq.Expressions;
 
 namespace SISOC.Data.Repository
 {
-	public class ModuloRepository : Repository<Modulo>, IModuloRepository
+	public class SubmenuRepository : Repository<Submenu>, ISubmenuRepository
 	{
-		public ModuloRepository(SisocDbContext db) : base(db)
+		public SubmenuRepository(SisocDbContext db) : base(db)
 		{
 
 		}

@@ -2,7 +2,7 @@
 
 namespace SISOC.Business.Interface
 {
-	public interface IModuloRepository : IRepository<Modulo>
+	public interface ISubmenuRepository : IRepository<Submenu>
 	{
 	}
 }

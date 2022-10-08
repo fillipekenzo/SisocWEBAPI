@@ -5,28 +5,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SISOC.Data.Migrations
 {
-    public partial class Iniciomodelagem : Migration
+    public partial class First : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Modulo",
+                name: "Menu",
                 columns: table => new
                 {
-                    ModuloID = table.Column<int>(type: "int", nullable: false)
+                    MenuID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "varchar(100)", nullable: false),
-                    NavegarURL = table.Column<string>(type: "varchar(100)", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NavegarURL = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Ativo = table.Column<bool>(type: "bit", nullable: false),
-                    PossuiMenu = table.Column<bool>(type: "bit", nullable: false),
+                    Ordem = table.Column<int>(type: "int", nullable: true),
                     DataHoraCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataHoraAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UsuarioCadastro = table.Column<string>(type: "varchar(100)", nullable: false),
-                    UsuarioAlteracao = table.Column<string>(type: "varchar(100)", nullable: false)
+                    DataHoraAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Modulo", x => x.ModuloID);
+                    table.PrimaryKey("PK_Menu", x => x.MenuID);
                 });
 
             migrationBuilder.CreateTable(
@@ -35,12 +33,10 @@ namespace SISOC.Data.Migrations
                 {
                     SetorID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Sigla = table.Column<string>(type: "varchar(100)", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    Sigla = table.Column<string>(type: "nvarchar(255)", nullable: false),
                     DataHoraCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataHoraAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UsuarioCadastro = table.Column<string>(type: "varchar(100)", nullable: false),
-                    UsuarioAlteracao = table.Column<string>(type: "varchar(100)", nullable: false)
+                    DataHoraAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,12 +49,10 @@ namespace SISOC.Data.Migrations
                 {
                     TipoOcorrenciaID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Descricao = table.Column<string>(type: "varchar(100)", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    Descricao = table.Column<string>(type: "nvarchar(255)", nullable: false),
                     DataHoraCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataHoraAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UsuarioCadastro = table.Column<string>(type: "varchar(100)", nullable: false),
-                    UsuarioAlteracao = table.Column<string>(type: "varchar(100)", nullable: false)
+                    DataHoraAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -71,12 +65,10 @@ namespace SISOC.Data.Migrations
                 {
                     TipoUsuarioID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Descricao = table.Column<string>(type: "varchar(100)", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    Descricao = table.Column<string>(type: "nvarchar(255)", nullable: false),
                     DataHoraCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataHoraAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UsuarioCadastro = table.Column<string>(type: "varchar(100)", nullable: false),
-                    UsuarioAlteracao = table.Column<string>(type: "varchar(100)", nullable: false)
+                    DataHoraAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -84,35 +76,27 @@ namespace SISOC.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Permissao",
+                name: "Submenu",
                 columns: table => new
                 {
-                    PermissaoID = table.Column<int>(type: "int", nullable: false)
+                    SubmenuID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ModuloID = table.Column<int>(type: "int", nullable: false),
-                    TipoUsuarioID = table.Column<int>(type: "int", nullable: false),
-                    Consultar = table.Column<bool>(type: "bit", nullable: false),
-                    Cadastrar = table.Column<bool>(type: "bit", nullable: false),
-                    Editar = table.Column<bool>(type: "bit", nullable: false),
-                    Excluir = table.Column<bool>(type: "bit", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NavegarURL = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Ativo = table.Column<bool>(type: "bit", nullable: false),
+                    Ordem = table.Column<int>(type: "int", nullable: true),
+                    MenuID = table.Column<int>(type: "int", nullable: false),
                     DataHoraCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataHoraAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UsuarioCadastro = table.Column<string>(type: "varchar(100)", nullable: false),
-                    UsuarioAlteracao = table.Column<string>(type: "varchar(100)", nullable: false)
+                    DataHoraAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Permissao", x => x.PermissaoID);
+                    table.PrimaryKey("PK_Submenu", x => x.SubmenuID);
                     table.ForeignKey(
-                        name: "FK_Permissao_Modulo_ModuloID",
-                        column: x => x.ModuloID,
-                        principalTable: "Modulo",
-                        principalColumn: "ModuloID");
-                    table.ForeignKey(
-                        name: "FK_Permissao_TipoUsuario_TipoUsuarioID",
-                        column: x => x.TipoUsuarioID,
-                        principalTable: "TipoUsuario",
-                        principalColumn: "TipoUsuarioID");
+                        name: "FK_Submenu_Menu_MenuID",
+                        column: x => x.MenuID,
+                        principalTable: "Menu",
+                        principalColumn: "MenuID");
                 });
 
             migrationBuilder.CreateTable(
@@ -121,15 +105,14 @@ namespace SISOC.Data.Migrations
                 {
                     UsuarioID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Email = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Senha = table.Column<string>(type: "varchar(100)", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    Senha = table.Column<string>(type: "nvarchar(500)", nullable: false),
+                    RA_SIAPE = table.Column<string>(type: "nvarchar(255)", nullable: false),
                     TipoUsuarioID = table.Column<int>(type: "int", nullable: false),
-                    SetorID = table.Column<int>(type: "int", nullable: false),
+                    SetorID = table.Column<int>(type: "int", nullable: true),
                     DataHoraCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataHoraAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UsuarioCadastro = table.Column<string>(type: "varchar(100)", nullable: false),
-                    UsuarioAlteracao = table.Column<string>(type: "varchar(100)", nullable: false)
+                    DataHoraAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -147,24 +130,58 @@ namespace SISOC.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Permissao",
+                columns: table => new
+                {
+                    PermissaoID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TipoUsuarioID = table.Column<int>(type: "int", nullable: false),
+                    Consultar = table.Column<bool>(type: "bit", nullable: false),
+                    Cadastrar = table.Column<bool>(type: "bit", nullable: false),
+                    Editar = table.Column<bool>(type: "bit", nullable: false),
+                    Excluir = table.Column<bool>(type: "bit", nullable: false),
+                    MenuID = table.Column<int>(type: "int", nullable: false),
+                    SubmenuID = table.Column<int>(type: "int", nullable: false),
+                    DataHoraCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataHoraAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Permissao", x => x.PermissaoID);
+                    table.ForeignKey(
+                        name: "FK_Permissao_Menu_MenuID",
+                        column: x => x.MenuID,
+                        principalTable: "Menu",
+                        principalColumn: "MenuID");
+                    table.ForeignKey(
+                        name: "FK_Permissao_Submenu_SubmenuID",
+                        column: x => x.SubmenuID,
+                        principalTable: "Submenu",
+                        principalColumn: "SubmenuID");
+                    table.ForeignKey(
+                        name: "FK_Permissao_TipoUsuario_TipoUsuarioID",
+                        column: x => x.TipoUsuarioID,
+                        principalTable: "TipoUsuario",
+                        principalColumn: "TipoUsuarioID");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Ocorrencia",
                 columns: table => new
                 {
                     OcorrenciaID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Assunto = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Descricao = table.Column<string>(type: "varchar(100)", nullable: false),
-                    UrgenciaENUM = table.Column<string>(type: "varchar(100)", nullable: false),
-                    SituacaoENUM = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Resolucao = table.Column<string>(type: "varchar(100)", nullable: false),
-                    UsuarioAtribuidoID = table.Column<int>(type: "int", nullable: false),
+                    Assunto = table.Column<string>(type: "nvarchar(500)", nullable: false),
+                    Descricao = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
+                    UrgenciaENUM = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    SituacaoENUM = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    Resolucao = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
+                    UsuarioAtribuidoID = table.Column<int>(type: "int", nullable: true),
                     UsuarioCadastroID = table.Column<int>(type: "int", nullable: false),
                     TipoOcorrenciaID = table.Column<int>(type: "int", nullable: false),
                     SetorID = table.Column<int>(type: "int", nullable: false),
                     DataHoraCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataHoraAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UsuarioCadastro = table.Column<string>(type: "varchar(100)", nullable: false),
-                    UsuarioAlteracao = table.Column<string>(type: "varchar(100)", nullable: false)
+                    DataHoraAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -192,30 +209,28 @@ namespace SISOC.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Interacao",
+                name: "InteracaoOcorrencia",
                 columns: table => new
                 {
-                    InteracaoID = table.Column<int>(type: "int", nullable: false)
+                    InteracaoOcorrenciaID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Assunto = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Descricao = table.Column<string>(type: "varchar(100)", nullable: false),
+                    Assunto = table.Column<string>(type: "nvarchar(500)", nullable: false),
+                    Descricao = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
                     UsuarioID = table.Column<int>(type: "int", nullable: false),
                     OcorrenciaID = table.Column<int>(type: "int", nullable: false),
                     DataHoraCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataHoraAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UsuarioCadastro = table.Column<string>(type: "varchar(100)", nullable: false),
-                    UsuarioAlteracao = table.Column<string>(type: "varchar(100)", nullable: false)
+                    DataHoraAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Interacao", x => x.InteracaoID);
+                    table.PrimaryKey("PK_InteracaoOcorrencia", x => x.InteracaoOcorrenciaID);
                     table.ForeignKey(
-                        name: "FK_Interacao_Ocorrencia_OcorrenciaID",
+                        name: "FK_InteracaoOcorrencia_Ocorrencia_OcorrenciaID",
                         column: x => x.OcorrenciaID,
                         principalTable: "Ocorrencia",
                         principalColumn: "OcorrenciaID");
                     table.ForeignKey(
-                        name: "FK_Interacao_Usuario_UsuarioID",
+                        name: "FK_InteracaoOcorrencia_Usuario_UsuarioID",
                         column: x => x.UsuarioID,
                         principalTable: "Usuario",
                         principalColumn: "UsuarioID");
@@ -227,24 +242,22 @@ namespace SISOC.Data.Migrations
                 {
                     AnexoID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "varchar(100)", nullable: false),
-                    TipoAnexo = table.Column<string>(type: "varchar(100)", nullable: false),
-                    ArquivoURL = table.Column<string>(type: "varchar(100)", nullable: false),
-                    InteracaoID = table.Column<int>(type: "int", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    TipoAnexo = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    ArquivoURL = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    InteracaoOcorrenciaID = table.Column<int>(type: "int", nullable: false),
                     OcorrenciaID = table.Column<int>(type: "int", nullable: false),
                     DataHoraCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataHoraAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UsuarioCadastro = table.Column<string>(type: "varchar(100)", nullable: false),
-                    UsuarioAlteracao = table.Column<string>(type: "varchar(100)", nullable: false)
+                    DataHoraAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Anexo", x => x.AnexoID);
                     table.ForeignKey(
-                        name: "FK_Anexo_Interacao_InteracaoID",
-                        column: x => x.InteracaoID,
-                        principalTable: "Interacao",
-                        principalColumn: "InteracaoID");
+                        name: "FK_Anexo_InteracaoOcorrencia_InteracaoOcorrenciaID",
+                        column: x => x.InteracaoOcorrenciaID,
+                        principalTable: "InteracaoOcorrencia",
+                        principalColumn: "InteracaoOcorrenciaID");
                     table.ForeignKey(
                         name: "FK_Anexo_Ocorrencia_OcorrenciaID",
                         column: x => x.OcorrenciaID,
@@ -253,9 +266,9 @@ namespace SISOC.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Anexo_InteracaoID",
+                name: "IX_Anexo_InteracaoOcorrenciaID",
                 table: "Anexo",
-                column: "InteracaoID");
+                column: "InteracaoOcorrenciaID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Anexo_OcorrenciaID",
@@ -263,13 +276,13 @@ namespace SISOC.Data.Migrations
                 column: "OcorrenciaID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Interacao_OcorrenciaID",
-                table: "Interacao",
+                name: "IX_InteracaoOcorrencia_OcorrenciaID",
+                table: "InteracaoOcorrencia",
                 column: "OcorrenciaID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Interacao_UsuarioID",
-                table: "Interacao",
+                name: "IX_InteracaoOcorrencia_UsuarioID",
+                table: "InteracaoOcorrencia",
                 column: "UsuarioID");
 
             migrationBuilder.CreateIndex(
@@ -293,14 +306,24 @@ namespace SISOC.Data.Migrations
                 column: "UsuarioCadastroID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Permissao_ModuloID",
+                name: "IX_Permissao_MenuID",
                 table: "Permissao",
-                column: "ModuloID");
+                column: "MenuID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Permissao_SubmenuID",
+                table: "Permissao",
+                column: "SubmenuID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Permissao_TipoUsuarioID",
                 table: "Permissao",
                 column: "TipoUsuarioID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Submenu_MenuID",
+                table: "Submenu",
+                column: "MenuID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Usuario_SetorID",
@@ -322,13 +345,16 @@ namespace SISOC.Data.Migrations
                 name: "Permissao");
 
             migrationBuilder.DropTable(
-                name: "Interacao");
+                name: "InteracaoOcorrencia");
 
             migrationBuilder.DropTable(
-                name: "Modulo");
+                name: "Submenu");
 
             migrationBuilder.DropTable(
                 name: "Ocorrencia");
+
+            migrationBuilder.DropTable(
+                name: "Menu");
 
             migrationBuilder.DropTable(
                 name: "TipoOcorrencia");

@@ -12,8 +12,8 @@ using SISOC.Data.Context;
 namespace SISOC.Data.Migrations
 {
     [DbContext(typeof(SisocDbContext))]
-    [Migration("20220929041738_Resolucao Null")]
-    partial class ResolucaoNull
+    [Migration("20221008052144_First")]
+    partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -104,13 +104,13 @@ namespace SISOC.Data.Migrations
                     b.ToTable("InteracaoOcorrencia");
                 });
 
-            modelBuilder.Entity("SISOC.Business.Models.Modulo", b =>
+            modelBuilder.Entity("SISOC.Business.Models.Menu", b =>
                 {
-                    b.Property<int>("ModuloID")
+                    b.Property<int>("MenuID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ModuloID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MenuID"), 1L, 1);
 
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
@@ -123,18 +123,20 @@ namespace SISOC.Data.Migrations
 
                     b.Property<string>("NavegarURL")
                         .IsRequired()
-                        .HasColumnType("nvarchar(255)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(255)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<bool>("PossuiMenu")
-                        .HasColumnType("bit");
+                    b.Property<int?>("Ordem")
+                        .HasColumnType("int");
 
-                    b.HasKey("ModuloID");
+                    b.HasKey("MenuID");
 
-                    b.ToTable("Modulo");
+                    b.ToTable("Menu");
                 });
 
             modelBuilder.Entity("SISOC.Business.Models.Ocorrencia", b =>
@@ -160,7 +162,6 @@ namespace SISOC.Data.Migrations
                         .HasColumnType("nvarchar(MAX)");
 
                     b.Property<string>("Resolucao")
-                        .IsRequired()
                         .HasColumnType("nvarchar(MAX)");
 
                     b.Property<int>("SetorID")
@@ -222,7 +223,12 @@ namespace SISOC.Data.Migrations
                     b.Property<bool>("Excluir")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ModuloID")
+                    b.Property<int?>("MenuID")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SubmenuID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("TipoUsuarioID")
@@ -230,7 +236,9 @@ namespace SISOC.Data.Migrations
 
                     b.HasKey("PermissaoID");
 
-                    b.HasIndex("ModuloID");
+                    b.HasIndex("MenuID");
+
+                    b.HasIndex("SubmenuID");
 
                     b.HasIndex("TipoUsuarioID");
 
@@ -262,6 +270,46 @@ namespace SISOC.Data.Migrations
                     b.HasKey("SetorID");
 
                     b.ToTable("Setor");
+                });
+
+            modelBuilder.Entity("SISOC.Business.Models.Submenu", b =>
+                {
+                    b.Property<int>("SubmenuID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubmenuID"), 1L, 1);
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("DataHoraAlteracao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataHoraCadastro")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MenuID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NavegarURL")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("Ordem")
+                        .HasColumnType("int");
+
+                    b.HasKey("SubmenuID");
+
+                    b.HasIndex("MenuID");
+
+                    b.ToTable("Submenu");
                 });
 
             modelBuilder.Entity("SISOC.Business.Models.TipoOcorrencia", b =>
@@ -430,9 +478,14 @@ namespace SISOC.Data.Migrations
 
             modelBuilder.Entity("SISOC.Business.Models.Permissao", b =>
                 {
-                    b.HasOne("SISOC.Business.Models.Modulo", "ModuloNavigation")
-                        .WithMany("Permissaos")
-                        .HasForeignKey("ModuloID")
+                    b.HasOne("SISOC.Business.Models.Menu", "MenuNavigation")
+                        .WithMany("Permissoes")
+                        .HasForeignKey("MenuID")
+                        .IsRequired();
+
+                    b.HasOne("SISOC.Business.Models.Submenu", "SubmenuNavigation")
+                        .WithMany("Permissoes")
+                        .HasForeignKey("SubmenuID")
                         .IsRequired();
 
                     b.HasOne("SISOC.Business.Models.TipoUsuario", "TipoUsuarioNavigation")
@@ -440,9 +493,21 @@ namespace SISOC.Data.Migrations
                         .HasForeignKey("TipoUsuarioID")
                         .IsRequired();
 
-                    b.Navigation("ModuloNavigation");
+                    b.Navigation("MenuNavigation");
+
+                    b.Navigation("SubmenuNavigation");
 
                     b.Navigation("TipoUsuarioNavigation");
+                });
+
+            modelBuilder.Entity("SISOC.Business.Models.Submenu", b =>
+                {
+                    b.HasOne("SISOC.Business.Models.Menu", "MenuNavigation")
+                        .WithMany("Submenus")
+                        .HasForeignKey("MenuID")
+                        .IsRequired();
+
+                    b.Navigation("MenuNavigation");
                 });
 
             modelBuilder.Entity("SISOC.Business.Models.Usuario", b =>
@@ -466,9 +531,11 @@ namespace SISOC.Data.Migrations
                     b.Navigation("Anexos");
                 });
 
-            modelBuilder.Entity("SISOC.Business.Models.Modulo", b =>
+            modelBuilder.Entity("SISOC.Business.Models.Menu", b =>
                 {
-                    b.Navigation("Permissaos");
+                    b.Navigation("Permissoes");
+
+                    b.Navigation("Submenus");
                 });
 
             modelBuilder.Entity("SISOC.Business.Models.Ocorrencia", b =>
@@ -483,6 +550,11 @@ namespace SISOC.Data.Migrations
                     b.Navigation("Ocorrencias");
 
                     b.Navigation("Usuarios");
+                });
+
+            modelBuilder.Entity("SISOC.Business.Models.Submenu", b =>
+                {
+                    b.Navigation("Permissoes");
                 });
 
             modelBuilder.Entity("SISOC.Business.Models.TipoOcorrencia", b =>

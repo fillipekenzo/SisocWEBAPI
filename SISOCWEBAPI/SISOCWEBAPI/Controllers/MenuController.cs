@@ -7,42 +7,42 @@ using SISOCWEBAPI.DTOs;
 namespace SISOCWEBAPI.Controllers
 {
 	[Route("sisocwebapi/v1/[controller]")]
-	public class ModuloController : MainController
+	public class MenuController : MainController
 	{
 		private readonly IWebHostEnvironment _env;
-		private readonly IModuloRepository _moduloRepository;
+		private readonly IMenuRepository _menuRepository;
 		private readonly IMapper _mapper;
-		public ModuloController(INotificador notificador,
-							IModuloRepository moduloRepository,
+		public MenuController(INotificador notificador,
+							IMenuRepository menuRepository,
 							IMapper mapper,
 							IWebHostEnvironment env) : base(notificador)
 		{
 			_env = env;
-			_moduloRepository = moduloRepository;
+			_menuRepository = menuRepository;
 			_mapper = mapper;
 		}
 		[HttpGet]
-		public async Task<ActionResult<List<Modulo>>> Get()
+		public async Task<ActionResult<List<Menu>>> Get()
 		{
-			var modulos = await _moduloRepository.ObterTodos();
-			return CustomResponse(modulos.ToList());
+			var menus = await _menuRepository.ObterTodos();
+			return CustomResponse(menus.ToList());
 		}
 
 
 		[HttpGet]
 		[Route("getbyid")]
-		public async Task<ActionResult<Modulo>> GetByID(int id)
+		public async Task<ActionResult<Menu>> GetByID(int id)
 		{
-			Modulo modulo = await _moduloRepository.ObterPorID(id);
-			return CustomResponse(modulo);
+			Menu menu = await _menuRepository.ObterPorID(id);
+			return CustomResponse(menu);
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post([FromBody] ModuloDTO modulo)
+		public async Task<IActionResult> Post([FromBody] MenuDTO menu)
 		{
 			try
 			{
-				await _moduloRepository.Adicionar(_mapper.Map<Modulo>(modulo));
+				await _menuRepository.Adicionar(_mapper.Map<Menu>(menu));
 				return CustomResponse();
 			}
 			catch (Exception ex)
@@ -53,11 +53,11 @@ namespace SISOCWEBAPI.Controllers
 		}
 
 		[HttpPut]
-		public async Task<IActionResult> Put([FromBody] ModuloDTO modulo)
+		public async Task<IActionResult> Put([FromBody] MenuDTO menu)
 		{
 			try
 			{
-				await _moduloRepository.Atualizar(_mapper.Map<Modulo>(modulo));
+				await _menuRepository.Atualizar(_mapper.Map<Menu>(menu));
 				return CustomResponse();
 			}
 			catch (Exception ex)
@@ -72,7 +72,7 @@ namespace SISOCWEBAPI.Controllers
 		{
 			try
 			{
-				return CustomResponse(_moduloRepository.Remover(id));
+				return CustomResponse(_menuRepository.Remover(id));
 			}
 			catch (Exception ex)
 			{

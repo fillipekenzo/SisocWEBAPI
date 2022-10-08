@@ -9,7 +9,8 @@ namespace SISOC.Data.Context
 		public SisocDbContext(DbContextOptions<SisocDbContext> options) : base(options) { }
 		public DbSet<Anexo> Anexos { get; set; }
 		public DbSet<InteracaoOcorrencia> Interacaos { get; set; }
-		public DbSet<Modulo> Modulos { get; set; }
+		public DbSet<Menu> Menus { get; set; }
+		public DbSet<Submenu> Submenus { get; set; }
 		public DbSet<Ocorrencia> Ocorrencias { get; set; }
 		public DbSet<Permissao> Permissaos { get; set; }
 		public DbSet<Setor> Setors { get; set; }

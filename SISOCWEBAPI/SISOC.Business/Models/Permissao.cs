@@ -8,16 +8,20 @@ namespace SISOC.Business.Models
 	{
 		[Key]
 		public int PermissaoID { get; set; }
-		public int ModuloID { get; set; }
 		public int TipoUsuarioID { get; set; }
 		public bool Consultar { get; set; }
 		public bool Cadastrar { get; set; }
 		public bool Editar { get; set; }
 		public bool Excluir { get; set; }
+		public int? MenuID { get; set; }
+		public int? SubmenuID { get; set; }
 
-		[ForeignKey(nameof(ModuloID))]
-		[InverseProperty("Permissaos")]
-		public virtual Modulo ModuloNavigation { get; set; }
+		[ForeignKey(nameof(MenuID))]
+		[InverseProperty("Permissoes")]
+		public virtual Menu MenuNavigation { get; set; }
+		[ForeignKey(nameof(SubmenuID))]
+		[InverseProperty("Permissoes")]
+		public virtual Submenu SubmenuNavigation { get; set; }
 
 		[ForeignKey(nameof(TipoUsuarioID))]
 		[InverseProperty("Permissaos")]
