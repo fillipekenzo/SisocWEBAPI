@@ -10,7 +10,7 @@ namespace SISOCWEBAPI.Controllers
 	public class SubmenuController : MainController
 	{
 		private readonly IWebHostEnvironment _env;
-		private readonly ISubmenuRepository _menuRepository;
+		private readonly ISubmenuRepository _submenuRepository;
 		private readonly IMapper _mapper;
 		public SubmenuController(INotificador notificador,
 							ISubmenuRepository menuRepository,
@@ -18,13 +18,13 @@ namespace SISOCWEBAPI.Controllers
 							IWebHostEnvironment env) : base(notificador)
 		{
 			_env = env;
-			_menuRepository = menuRepository;
+			_submenuRepository = menuRepository;
 			_mapper = mapper;
 		}
 		[HttpGet]
 		public async Task<ActionResult<List<Submenu>>> Get()
 		{
-			var menus = await _menuRepository.ObterTodos();
+			var menus = await _submenuRepository.ObterTodos();
 			return CustomResponse(menus.ToList());
 		}
 
@@ -33,16 +33,16 @@ namespace SISOCWEBAPI.Controllers
 		[Route("getbyid")]
 		public async Task<ActionResult<Submenu>> GetByID(int id)
 		{
-			Submenu menu = await _menuRepository.ObterPorID(id);
-			return CustomResponse(menu);
+			Submenu submenu = await _submenuRepository.ObterPorID(id);
+			return CustomResponse(submenu);
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post([FromBody] SubmenuDTO menu)
+		public async Task<IActionResult> Post([FromBody] SubmenuDTO submenu)
 		{
 			try
 			{
-				await _menuRepository.Adicionar(_mapper.Map<Submenu>(menu));
+				await _submenuRepository.Adicionar(_mapper.Map<Submenu>(submenu));
 				return CustomResponse();
 			}
 			catch (Exception ex)
@@ -53,11 +53,11 @@ namespace SISOCWEBAPI.Controllers
 		}
 
 		[HttpPut]
-		public async Task<IActionResult> Put([FromBody] SubmenuDTO menu)
+		public async Task<IActionResult> Put([FromBody] SubmenuDTO submenu)
 		{
 			try
 			{
-				await _menuRepository.Atualizar(_mapper.Map<Submenu>(menu));
+				await _submenuRepository.Atualizar(_mapper.Map<Submenu>(submenu));
 				return CustomResponse();
 			}
 			catch (Exception ex)
@@ -72,7 +72,7 @@ namespace SISOCWEBAPI.Controllers
 		{
 			try
 			{
-				return CustomResponse(_menuRepository.Remover(id));
+				return CustomResponse(_submenuRepository.Remover(id));
 			}
 			catch (Exception ex)
 			{

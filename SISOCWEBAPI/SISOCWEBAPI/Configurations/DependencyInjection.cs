@@ -23,6 +23,7 @@ namespace SISOCWEBAPI.Configurations
 			services.AddScoped<ITipoOcorrenciaRepository, TipoOcorrenciaRepository>();
 			services.AddScoped<ITipoUsuarioRepository, TipoUsuarioRepository>();
 			services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+			services.AddScoped<ISubmenuRepository, SubmenuRepository>();
 
 			// Service
 			services.AddScoped<IUsuarioService, UsuarioService>();

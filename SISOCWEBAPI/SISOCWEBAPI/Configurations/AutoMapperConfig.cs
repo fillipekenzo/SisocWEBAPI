@@ -15,6 +15,7 @@ namespace SISOCWEBAPI.Configurations
 			CreateMap<Anexo, AnexoDTO>().ReverseMap();
 			CreateMap<InteracaoOcorrencia, InteracaoOcorrenciaDTO>().ReverseMap();
 			CreateMap<Menu, MenuDTO>().ReverseMap();
+			CreateMap<Submenu, SubmenuDTO>().ReverseMap();
 			CreateMap<Ocorrencia, OcorrenciaDTO>().ReverseMap();
 			CreateMap<Permissao, PermissaoDTO>().ReverseMap();
 			CreateMap<TipoOcorrencia, TipoOcorrenciaDTO>().ReverseMap();

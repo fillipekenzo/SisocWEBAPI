@@ -25,7 +25,11 @@ namespace SISOCWEBAPI.Controllers
 		public async Task<ActionResult<List<Menu>>> Get()
 		{
 			var menus = await _menuRepository.ObterTodos();
-			return CustomResponse(menus.ToList());
+			foreach (var menu in menus)
+			{
+				menu.Submenus.OrderBy(sm => sm.Ordem);
+			}
+			return CustomResponse(menus.ToList().OrderBy(m => m.Ordem));
 		}
 
 
