@@ -13,5 +13,29 @@ namespace SISOC.Data.Repository
 		{
 
 		}
+
+		public override async Task<List<Permissao>> ObterTodos()
+		{
+			try
+			{
+				return await Db.Permissaos.Include(i => i.TipoUsuarioNavigation).ToListAsync();
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+		public override async Task<IEnumerable<Permissao>> Buscar(Expression<Func<Permissao, bool>> predicate = null)
+		{
+			try
+			{
+				return await Db.Permissaos.AsNoTracking().Include(i => i.TipoUsuarioNavigation).Where(predicate).ToListAsync();
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 	}
 }

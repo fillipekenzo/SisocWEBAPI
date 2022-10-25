@@ -28,6 +28,13 @@ namespace SISOCWEBAPI.Controllers
 			return CustomResponse(modulos.ToList());
 		}
 
+		[HttpGet]
+		[Route("getbymenuid")]
+		public async Task<ActionResult<List<Permissao>>> GetByMenuID(int id)
+		{
+			var permissao = _permissaoRepository.Buscar(p => p.MenuID == id).GetAwaiter().GetResult();
+			return CustomResponse(permissao);
+		}
 
 		[HttpGet]
 		[Route("getbyid")]
