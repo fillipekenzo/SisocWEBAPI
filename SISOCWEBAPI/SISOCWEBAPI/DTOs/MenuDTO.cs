@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SISOC.Business.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace SISOCWEBAPI.DTOs
 {
@@ -11,5 +12,7 @@ namespace SISOCWEBAPI.DTOs
 		public bool Ativo { get; set; }
 		public bool PossuiMenu { get; set; }
         public int? Ordem { get; set; }
+		public virtual ICollection<Submenu>? Submenus { get; set; }
+
 	}
 }

@@ -11,14 +11,17 @@ namespace SISOCWEBAPI.Controllers
 	{
 		private readonly IWebHostEnvironment _env;
 		private readonly IMenuRepository _menuRepository;
+		private readonly IPermissaoRepository _permissaoRepository;
 		private readonly IMapper _mapper;
 		public MenuController(INotificador notificador,
 							IMenuRepository menuRepository,
+							IPermissaoRepository permissaoRepository,
 							IMapper mapper,
 							IWebHostEnvironment env) : base(notificador)
 		{
 			_env = env;
 			_menuRepository = menuRepository;
+			_permissaoRepository = permissaoRepository;
 			_mapper = mapper;
 		}
 		[HttpGet]
@@ -32,6 +35,20 @@ namespace SISOCWEBAPI.Controllers
 			return CustomResponse(menus.ToList().OrderBy(m => m.Ordem));
 		}
 
+		[HttpGet]
+		[Route("getbytipousuarioid")]
+		public async Task<ActionResult<Menu>> GetByTipoUsuarioID(int tipousuarioid)
+		{
+			var permissaos = await _permissaoRepository.ObterPorTipoUsuarioID(tipousuarioid);
+			var menus = new List<MenuDTO>();
+			foreach (var permissao in permissaos)
+			{
+				permissao.MenuNavigation.Submenus.OrderBy(sm => sm.Ordem);
+				menus.Add(_mapper.Map<MenuDTO>(permissao.MenuNavigation));
+			}
+
+			return CustomResponse(menus.ToList().OrderBy(m => m.Ordem));
+		}
 
 		[HttpGet]
 		[Route("getbyid")]

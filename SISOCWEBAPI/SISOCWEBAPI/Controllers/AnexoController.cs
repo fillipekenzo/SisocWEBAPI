@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SISOC.Business.Interface;
 using SISOC.Business.Models;
 using SISOCWEBAPI.DTOs;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SISOCWEBAPI.Controllers
 {
@@ -38,12 +39,44 @@ namespace SISOCWEBAPI.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post([FromBody] AnexoDTO anexoDTO)
+		public async Task<IActionResult> Post(AnexoDTO anexoDTO, IFormFile file)
 		{
 			try
 			{
+				anexoDTO.Nome = file.FileName;
+				MemoryStream ms = new MemoryStream();
+				file.CopyTo(ms);
+				anexoDTO.AnexoDados = ms.ToArray();
+				ms.Close();
+				ms.Dispose();
 				await _anexoRepository.Adicionar(_mapper.Map<Anexo>(anexoDTO));
 				return CustomResponse();
+			}
+			catch (Exception ex)
+			{
+				NotificarErro(ex.Message);
+				return CustomResponse();
+			}
+		}
+
+		[HttpPost]
+		[Route("getAnexo")]
+		public ActionResult GetAnexo()
+		{
+			try
+			{
+				Anexo img = _anexoRepository.ObterTodos().Result.FirstOrDefault();
+				if (img != null)
+				{
+					string imageBase64Data = Convert.ToBase64String(img.AnexoDados);
+
+					string imageDataURL =
+						string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+					img.AnexoURL = imageDataURL;
+					return CustomResponse(img);
+				}
+				return CustomResponse();
+
 			}
 			catch (Exception ex)
 			{

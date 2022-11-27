@@ -27,6 +27,7 @@ namespace SISOCWEBAPI.Configurations
 
 			// Service
 			services.AddScoped<IUsuarioService, UsuarioService>();
+			services.AddScoped<IAnexoService, AnexoService>();
 
 			return services;
 		}

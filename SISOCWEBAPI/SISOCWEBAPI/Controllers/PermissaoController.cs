@@ -37,6 +37,14 @@ namespace SISOCWEBAPI.Controllers
 		}
 
 		[HttpGet]
+		[Route("getbymenuidtipousuarioid")]
+		public async Task<ActionResult<Permissao>> GetByMenuIDTipoUsuarioID(int menuID,int tipoUsuarioID)
+		{
+			var permissao = _permissaoRepository.Buscar(p => p.MenuID == menuID && p.TipoUsuarioID == tipoUsuarioID).GetAwaiter().GetResult().FirstOrDefault();
+			return CustomResponse(permissao);
+		}
+
+		[HttpGet]
 		[Route("getbyid")]
 		public async Task<ActionResult<Permissao>> GetByID(int id)
 		{

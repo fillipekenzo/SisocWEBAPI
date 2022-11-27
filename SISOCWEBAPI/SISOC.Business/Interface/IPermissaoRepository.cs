@@ -7,5 +7,6 @@ namespace SISOC.Business.Interface
 	{
 		Task<List<Permissao>> ObterTodos();
 		Task<IEnumerable<Permissao>> Buscar(Expression<Func<Permissao, bool>> predicate = null);
+		Task<List<Permissao>> ObterPorTipoUsuarioID(int tipoUsuarioID);
 	}
 }

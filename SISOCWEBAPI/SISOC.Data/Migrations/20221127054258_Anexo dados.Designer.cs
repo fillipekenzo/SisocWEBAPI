@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SISOC.Data.Context;
 
@@ -11,9 +12,10 @@ using SISOC.Data.Context;
 namespace SISOC.Data.Migrations
 {
     [DbContext(typeof(SisocDbContext))]
-    partial class SisocDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221127054258_Anexo dados")]
+    partial class Anexodados
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,6 +37,7 @@ namespace SISOC.Data.Migrations
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("AnexoURL")
+                        .IsRequired()
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<DateTime>("DataHoraAlteracao")
@@ -44,6 +47,7 @@ namespace SISOC.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("InteracaoOcorrenciaID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Nome")
@@ -51,6 +55,7 @@ namespace SISOC.Data.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<int?>("OcorrenciaID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("TipoAnexo")
@@ -143,7 +148,7 @@ namespace SISOC.Data.Migrations
                             MenuID = 1,
                             Ativo = true,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8269),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8264),
                             NavegarURL = "menu",
                             Nome = "Menu",
                             Ordem = 1
@@ -153,7 +158,7 @@ namespace SISOC.Data.Migrations
                             MenuID = 2,
                             Ativo = true,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8272),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8302),
                             NavegarURL = "setor",
                             Nome = "Setor",
                             Ordem = 2
@@ -163,7 +168,7 @@ namespace SISOC.Data.Migrations
                             MenuID = 3,
                             Ativo = true,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8273),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8303),
                             NavegarURL = "permissao",
                             Nome = "Permissão",
                             Ordem = 3
@@ -173,7 +178,7 @@ namespace SISOC.Data.Migrations
                             MenuID = 4,
                             Ativo = true,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8274),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8305),
                             NavegarURL = "tipo-ocorrencia",
                             Nome = "Tipo Ocorrência",
                             Ordem = 4
@@ -183,7 +188,7 @@ namespace SISOC.Data.Migrations
                             MenuID = 5,
                             Ativo = true,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8276),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8306),
                             NavegarURL = "tipo-usuario",
                             Nome = "Tipo Usuário",
                             Ordem = 5
@@ -193,7 +198,7 @@ namespace SISOC.Data.Migrations
                             MenuID = 6,
                             Ativo = true,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8277),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8307),
                             NavegarURL = "usuario",
                             Nome = "Usuário",
                             Ordem = 6
@@ -203,7 +208,7 @@ namespace SISOC.Data.Migrations
                             MenuID = 7,
                             Ativo = true,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8278),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8309),
                             NavegarURL = "ocorrencia",
                             Nome = "Ocorrência",
                             Ordem = 7
@@ -322,7 +327,7 @@ namespace SISOC.Data.Migrations
                             Cadastrar = true,
                             Consultar = true,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8307),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8347),
                             Editar = true,
                             Excluir = true,
                             MenuID = 1,
@@ -335,7 +340,7 @@ namespace SISOC.Data.Migrations
                             Cadastrar = true,
                             Consultar = true,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8309),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8349),
                             Editar = true,
                             Excluir = true,
                             MenuID = 2,
@@ -348,7 +353,7 @@ namespace SISOC.Data.Migrations
                             Cadastrar = true,
                             Consultar = true,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8310),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8350),
                             Editar = true,
                             Excluir = true,
                             MenuID = 3,
@@ -361,7 +366,7 @@ namespace SISOC.Data.Migrations
                             Cadastrar = true,
                             Consultar = true,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8311),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8351),
                             Editar = true,
                             Excluir = true,
                             MenuID = 4,
@@ -374,7 +379,7 @@ namespace SISOC.Data.Migrations
                             Cadastrar = true,
                             Consultar = true,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8312),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8352),
                             Editar = true,
                             Excluir = true,
                             MenuID = 5,
@@ -387,7 +392,7 @@ namespace SISOC.Data.Migrations
                             Cadastrar = true,
                             Consultar = true,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8313),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8353),
                             Editar = true,
                             Excluir = true,
                             MenuID = 6,
@@ -400,7 +405,7 @@ namespace SISOC.Data.Migrations
                             Cadastrar = true,
                             Consultar = true,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8314),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8354),
                             Editar = true,
                             Excluir = true,
                             MenuID = 7,
@@ -413,7 +418,7 @@ namespace SISOC.Data.Migrations
                             Cadastrar = true,
                             Consultar = true,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8315),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8356),
                             Editar = true,
                             Excluir = false,
                             MenuID = 7,
@@ -426,7 +431,7 @@ namespace SISOC.Data.Migrations
                             Cadastrar = true,
                             Consultar = true,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8316),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8357),
                             Editar = true,
                             Excluir = false,
                             MenuID = 7,
@@ -466,7 +471,7 @@ namespace SISOC.Data.Migrations
                         {
                             SetorID = 1,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8142),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8111),
                             Nome = "Conselho Superior",
                             Sigla = "COSUP"
                         },
@@ -474,7 +479,7 @@ namespace SISOC.Data.Migrations
                         {
                             SetorID = 2,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8150),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8121),
                             Nome = "Reitoria",
                             Sigla = "RTRIA"
                         },
@@ -482,7 +487,7 @@ namespace SISOC.Data.Migrations
                         {
                             SetorID = 3,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8151),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8122),
                             Nome = "Diretoria de Ensino",
                             Sigla = "DIREN"
                         });
@@ -533,7 +538,7 @@ namespace SISOC.Data.Migrations
                             SubmenuID = 1,
                             Ativo = true,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8293),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8328),
                             MenuID = 7,
                             NavegarURL = "cadastrar",
                             Nome = "Cadastrar",
@@ -544,7 +549,7 @@ namespace SISOC.Data.Migrations
                             SubmenuID = 2,
                             Ativo = true,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8294),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8329),
                             MenuID = 7,
                             NavegarURL = "consultar",
                             Nome = "Consultar",
@@ -583,7 +588,7 @@ namespace SISOC.Data.Migrations
                         {
                             TipoOcorrenciaID = 1,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8251),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8242),
                             Descricao = "Incidentes com Alunos",
                             Nome = "Aluno"
                         },
@@ -591,7 +596,7 @@ namespace SISOC.Data.Migrations
                         {
                             TipoOcorrenciaID = 2,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8252),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8243),
                             Descricao = "Incidentes com o Câmpus",
                             Nome = "Campus"
                         },
@@ -599,7 +604,7 @@ namespace SISOC.Data.Migrations
                         {
                             TipoOcorrenciaID = 3,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8253),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8243),
                             Descricao = "Incidentes dentro da Sala de Aula",
                             Nome = "Sala de Aula"
                         },
@@ -607,7 +612,7 @@ namespace SISOC.Data.Migrations
                         {
                             TipoOcorrenciaID = 4,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8253),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8244),
                             Descricao = "Incidentes com Docente",
                             Nome = "Docente"
                         });
@@ -644,7 +649,7 @@ namespace SISOC.Data.Migrations
                         {
                             TipoUsuarioID = 1,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8233),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8223),
                             Descricao = "Usuário Admnistrador",
                             Nome = "ADMIN"
                         },
@@ -652,7 +657,7 @@ namespace SISOC.Data.Migrations
                         {
                             TipoUsuarioID = 2,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8234),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8224),
                             Descricao = "Usuário Estudante",
                             Nome = "ESTUDANTE"
                         },
@@ -660,7 +665,7 @@ namespace SISOC.Data.Migrations
                         {
                             TipoUsuarioID = 3,
                             DataHoraAlteracao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 52, 21, 240, DateTimeKind.Local).AddTicks(8235),
+                            DataHoraCadastro = new DateTime(2022, 11, 27, 1, 42, 58, 4, DateTimeKind.Local).AddTicks(8226),
                             Descricao = "Usuário Docente",
                             Nome = "DOCENTE"
                         });
@@ -720,7 +725,7 @@ namespace SISOC.Data.Migrations
                             Email = "admin@email.com",
                             Nome = "ADMIN",
                             RA_SIAPE = "123",
-                            Senha = "ADLDNon2r1ImCafG93LaSZVP1ReC9COfo81feIgF3XeNGT8/nfT1aq8ayOO3YKOgTg==",
+                            Senha = "ALE29bg3K6xZ7bRZRZmpFM7QcA4P/bKcYa2xoY25mXJj6E/ldskt33Z9mtita7hG3w==",
                             SetorID = 1,
                             TipoUsuarioID = 1
                         });
@@ -730,11 +735,13 @@ namespace SISOC.Data.Migrations
                 {
                     b.HasOne("SISOC.Business.Models.InteracaoOcorrencia", "InteracaoOcorrenciaNavigation")
                         .WithMany("Anexos")
-                        .HasForeignKey("InteracaoOcorrenciaID");
+                        .HasForeignKey("InteracaoOcorrenciaID")
+                        .IsRequired();
 
                     b.HasOne("SISOC.Business.Models.Ocorrencia", "OcorrenciaNavigation")
                         .WithMany("Anexos")
-                        .HasForeignKey("OcorrenciaID");
+                        .HasForeignKey("OcorrenciaID")
+                        .IsRequired();
 
                     b.Navigation("InteracaoOcorrenciaNavigation");
 

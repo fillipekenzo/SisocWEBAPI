@@ -36,6 +36,17 @@ namespace SISOC.Data.Repository
 				throw ex;
 			}
 		}
+		public async Task<List<Permissao>> ObterPorTipoUsuarioID(int tipoUsuarioID)
+		{
+			try
+			{
+				return await Db.Permissaos.Where(t => t.TipoUsuarioID == tipoUsuarioID).Include(p => p.MenuNavigation).ThenInclude(i => i.Submenus).ToListAsync();
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
 
 	}
 }
