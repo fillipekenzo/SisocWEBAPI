@@ -28,12 +28,13 @@ namespace SISOC.Data.Repository
 				throw ex;
 			}
 		}
-		public virtual async Task Adicionar(TEntity entity)
+		public virtual async Task<TEntity> Adicionar(TEntity entity)
 		{
 			try
 			{
 				DbSet.Add(entity);
 				await SaveChanges();
+				return entity;
 			}
 			catch (Exception ex)
 			{

@@ -8,7 +8,7 @@ namespace SISOC.Business.Interface
 		Task<IEnumerable<TEntity>> Buscar(Expression<Func<TEntity, bool>> predicate = null);
 		Task<List<TEntity>> ObterTodos();
 		Task<TEntity> ObterPorID(int id);
-		Task Adicionar(TEntity entity);
+		Task<TEntity> Adicionar(TEntity entity);
 		Task Atualizar(TEntity entity);
 		Task Remover(int id);
 		Task<int> SaveChanges();

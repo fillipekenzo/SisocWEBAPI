@@ -15,5 +15,6 @@ namespace SISOCWEBAPI.DTOs
 		public int UsuarioCadastroID { get; set; }
 		public int TipoOcorrenciaID { get; set; }
 		public int SetorID { get; set; }
+		public IFormFile File { get; set; }
 	}
 }

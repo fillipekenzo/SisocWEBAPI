@@ -24,5 +24,16 @@ namespace SISOC.Data.Repository
 				throw ex;
 			}
 		}
+		public virtual async Task<Ocorrencia> ObterPorID(int id)
+		{
+			try
+			{
+				return await Db.Ocorrencias.Include(o => o.Anexos).Include(o => o.UsuarioCadastroNavigation).Include(o => o.UsuarioAtribuidoNavigation).Where(o => o.OcorrenciaID == id).FirstOrDefaultAsync();
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
 	}
 }
