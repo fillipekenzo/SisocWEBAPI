@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using SISOC.Business.Interface;
 using SISOC.Business.Models;
+using SISOC.Business.Service;
+using SISOC.Data.Repository;
 using SISOCWEBAPI.DTOs;
 
 namespace SISOCWEBAPI.Controllers
@@ -11,14 +13,17 @@ namespace SISOCWEBAPI.Controllers
 	{
 		private readonly IWebHostEnvironment _env;
 		private readonly IInteracaoOcorrenciaRepository _interacaoOcorrenciaRepository;
+		private readonly IAnexoService _anexoService;
 		private readonly IMapper _mapper;
 		public InteracaoOcorrenciaController(INotificador notificador,
 							IInteracaoOcorrenciaRepository interacaoOcorrenciaRepository,
+							IAnexoService anexoService,
 							IMapper mapper,
 							IWebHostEnvironment env) : base(notificador)
 		{
 			_env = env;
 			_interacaoOcorrenciaRepository = interacaoOcorrenciaRepository;
+			_anexoService = anexoService;
 			_mapper = mapper;
 		}
 		[HttpGet]
@@ -38,11 +43,20 @@ namespace SISOCWEBAPI.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post([FromBody] InteracaoOcorrenciaDTO interacaoOcorrenciaDTO)
+		public async Task<IActionResult> Post(InteracaoOcorrenciaDTO interacaoOcorrenciaDTO)
 		{
 			try
 			{
-				await _interacaoOcorrenciaRepository.Adicionar(_mapper.Map<InteracaoOcorrencia>(interacaoOcorrenciaDTO));
+				var ocorrencia = _mapper.Map<InteracaoOcorrencia>(interacaoOcorrenciaDTO);
+				var ocorrenciaReturn = await _interacaoOcorrenciaRepository.Adicionar(_mapper.Map<InteracaoOcorrencia>(interacaoOcorrenciaDTO));
+				if (interacaoOcorrenciaDTO.File != null)
+				{
+					var anexo = new Anexo()
+					{
+						InteracaoOcorrenciaID = ocorrenciaReturn.InteracaoOcorrenciaID,
+					};
+					await _anexoService.UploadImagem(anexo, interacaoOcorrenciaDTO.File);
+				}
 				return CustomResponse();
 			}
 			catch (Exception ex)
@@ -51,7 +65,7 @@ namespace SISOCWEBAPI.Controllers
 				return CustomResponse();
 			}
 		}
-
+		
 		[HttpPut]
 		public async Task<IActionResult> Put([FromBody] InteracaoOcorrenciaDTO interacaoOcorrenciaDTO)
 		{

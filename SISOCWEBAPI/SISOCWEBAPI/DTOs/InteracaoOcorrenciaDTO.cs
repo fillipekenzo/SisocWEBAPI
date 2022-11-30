@@ -10,5 +10,6 @@ namespace SISOCWEBAPI.DTOs
         public string Descricao { get; set; }
         public int UsuarioID { get; set; }
         public int OcorrenciaID { get; set; }
-    }
+		public IFormFile File { get; set; }
+	}
 }

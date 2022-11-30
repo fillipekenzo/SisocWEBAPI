@@ -38,11 +38,28 @@ namespace SISOCWEBAPI.Controllers
 		public async Task<ActionResult<Ocorrencia>> GetByID(int id)
 		{
 			Ocorrencia ocorrencia = await _ocorrenciaRepository.ObterPorID(id);
-			var anexo = await _anexoService.GetImagem(ocorrencia.Anexos.FirstOrDefault().AnexoID);
-			ocorrencia.Anexos.Clear();
-			ocorrencia.Anexos.Add(anexo);
+			if (ocorrencia.Anexos.Any())
+			{
+				var anexo = await _anexoService.GetImagem(ocorrencia.Anexos.FirstOrDefault().AnexoID);
+				ocorrencia.Anexos.Clear();
+				ocorrencia.Anexos.Add(anexo);
+			}
+			if (ocorrencia.InteracaoOcorrencias.Any())
+			{
+				foreach(var interacao in ocorrencia.InteracaoOcorrencias)
+				{
+					if (interacao.Anexos.Any())
+					{
+						var anexo = await _anexoService.GetImagem(interacao.Anexos.FirstOrDefault().AnexoID);
+						interacao.Anexos.Clear();
+						interacao.Anexos.Add(anexo);
+					}					
+				}
+			}
+			
 			return CustomResponse(ocorrencia);
 		}
+
 
 		[HttpPost]
 		public async Task<IActionResult> Post(OcorrenciaDTO ocorrenciaDTO)

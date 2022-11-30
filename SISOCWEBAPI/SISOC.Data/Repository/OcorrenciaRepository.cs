@@ -28,7 +28,7 @@ namespace SISOC.Data.Repository
 		{
 			try
 			{
-				return await Db.Ocorrencias.Include(o => o.Anexos).Include(o => o.UsuarioCadastroNavigation).Include(o => o.UsuarioAtribuidoNavigation).Where(o => o.OcorrenciaID == id).FirstOrDefaultAsync();
+				return await Db.Ocorrencias.Include(o => o.Anexos).Include(o => o.UsuarioCadastroNavigation).Include(o => o.UsuarioAtribuidoNavigation).Where(o => o.OcorrenciaID == id).Include(o => o.InteracaoOcorrencias).ThenInclude(io=>io.UsuarioNavigation).Include(o => o.InteracaoOcorrencias).ThenInclude(io => io.Anexos).FirstOrDefaultAsync();
 			}
 			catch (Exception ex)
 			{
