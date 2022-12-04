@@ -7,15 +7,20 @@ namespace SISOC.Business.Service
 	public class UsuarioService : BaseService, IUsuarioService
 	{
 		private readonly IUsuarioRepository _usuarioRepository;
+		private readonly ITipoUsuarioRepository _tipoUsuarioRepository;
 
 		public UsuarioService(INotificador notificador,
-			IUsuarioRepository usuarioRepository) : base(notificador)
+			IUsuarioRepository usuarioRepository,
+			ITipoUsuarioRepository tipoUsuarioRepository
+			) : base(notificador)
 		{
 			_usuarioRepository = usuarioRepository;
+			_tipoUsuarioRepository = tipoUsuarioRepository;
 		}
 		public async Task<bool> Cadastrar(Usuario usuario)
 		{
-			usuario.TipoUsuarioID = 3;
+			var tipoUsuario = _tipoUsuarioRepository.Buscar(t => t.Nome.ToUpper() == "ESTUDANTE").Result.FirstOrDefault();
+			usuario.TipoUsuarioID = tipoUsuario.TipoUsuarioID;
 			usuario.Senha = Cripto.HashPassword(usuario.Senha);
 			await _usuarioRepository.Adicionar(usuario);
 			return true;

@@ -9,7 +9,7 @@ namespace SISOCWEBAPI.DTOs
 		public string Email { get; set; }
 
 		[Required(ErrorMessage = "O campo senha é obrigatório")]
-		[StringLength(20, ErrorMessage = "O campo senha precisa ter entre {2} e {1} caracteres", MinimumLength = 6)]
+		[StringLength(20, ErrorMessage = "O campo senha precisa ter entre {2} e {1} caracteres", MinimumLength = 4)]
 		public string Senha { get; set; }
 	}
 }

@@ -66,7 +66,6 @@ namespace SISOCWEBAPI.Controllers
 
 				var result = await _usuarioService.Cadastrar(_mapper.Map<Usuario>(usuarioRegistroDTO));
 
-
 				if (!result)
 				{
 					NotificarErro("Erro ao cadastrar");
