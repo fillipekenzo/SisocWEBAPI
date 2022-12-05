@@ -19,6 +19,7 @@ namespace SISOC.Data.Repository
 			{
 				return await DbSet.AsNoTracking().Where(u => u.Email == email)
 					.Include(u => u.TipoUsuarioNavigation).ThenInclude(t => t.Permissaos)
+					.Include(u => u.SetorNavigation)
 					.ToListAsync();
 			}
 			catch (Exception ex)

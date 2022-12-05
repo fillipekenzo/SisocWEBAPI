@@ -82,7 +82,9 @@ namespace SISOC.Data.Context
 			builder.Entity<TipoUsuario>().HasData(
 				new TipoUsuario() { TipoUsuarioID = 1, Nome = "ADMIN", Descricao = "Usuário Admnistrador", DataHoraCadastro = DateTime.Now },
 				new TipoUsuario() { TipoUsuarioID = 2, Nome = "ESTUDANTE", Descricao = "Usuário Estudante", DataHoraCadastro = DateTime.Now },
-				new TipoUsuario() { TipoUsuarioID = 3, Nome = "DOCENTE", Descricao = "Usuário Docente", DataHoraCadastro = DateTime.Now }
+				new TipoUsuario() { TipoUsuarioID = 3, Nome = "DOCENTE", Descricao = "Usuário Docente", DataHoraCadastro = DateTime.Now },
+				new TipoUsuario() { TipoUsuarioID = 4, Nome = "ATENDIMENTO", Descricao = "Usuário responsável por atender as Ocorrências", DataHoraCadastro = DateTime.Now },
+				new TipoUsuario() { TipoUsuarioID = 5, Nome = "SUPORTE", Descricao = "Usuário com permissões para criar usuários", DataHoraCadastro = DateTime.Now }
 				);
 		}
 
@@ -93,7 +95,7 @@ namespace SISOC.Data.Context
 				UsuarioID = 1,
 				Nome = "ADMIN",
 				Email = "admin@email.com",
-				Senha = Cripto.HashPassword("1234"),
+				Senha = Cripto.HashPassword("admin123"),
 				SetorID = 1,
 				RA_SIAPE = "123",
 				TipoUsuarioID = 1,
@@ -132,7 +134,12 @@ namespace SISOC.Data.Context
 
 				new Permissao() { PermissaoID = 8, MenuID = 7, SubmenuID = 1, Cadastrar = true, Consultar = true, Editar = true, Excluir = false, TipoUsuarioID = 2, DataHoraCadastro = DateTime.Now },
 
-				new Permissao() { PermissaoID = 9, MenuID = 7, SubmenuID = 1, Cadastrar = true, Consultar = true, Editar = true, Excluir = false, TipoUsuarioID = 3, DataHoraCadastro = DateTime.Now }
+				new Permissao() { PermissaoID = 9, MenuID = 7, SubmenuID = 1, Cadastrar = true, Consultar = true, Editar = true, Excluir = false, TipoUsuarioID = 3, DataHoraCadastro = DateTime.Now },
+
+				new Permissao() { PermissaoID = 10, MenuID = 7, SubmenuID = 1, Cadastrar = true, Consultar = true, Editar = true, Excluir = false, TipoUsuarioID = 4, DataHoraCadastro = DateTime.Now },
+
+				new Permissao() { PermissaoID = 11, MenuID = 6, SubmenuID = 1, Cadastrar = true, Consultar = true, Editar = true, Excluir = false, TipoUsuarioID = 5, DataHoraCadastro = DateTime.Now },
+				new Permissao() { PermissaoID = 12, MenuID = 7, SubmenuID = 1, Cadastrar = true, Consultar = true, Editar = true, Excluir = false, TipoUsuarioID = 5, DataHoraCadastro = DateTime.Now }
 
 				);
 		}

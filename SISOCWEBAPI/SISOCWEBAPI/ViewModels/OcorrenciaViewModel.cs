@@ -10,6 +10,7 @@ namespace SISOCWEBAPI.ViewModels
 		public string Descricao { get; set; }
 		public string Urgencia { get; set; }
 		public string Situacao { get; set; }
+		public string SituacaoTexto { get; set; }
 		public string Resolucao { get; set; }
 		public DateTime DataHoraCadastro { get; set; }
 		public int? UsuarioAtribuidoID { get; set; }

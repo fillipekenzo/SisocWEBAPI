@@ -98,16 +98,16 @@ builder.Services.AddAuthentication(authOptions =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-	app.UseDeveloperExceptionPage();
-}
-else
-{
-	app.UseExceptionHandler("/erro/500");
-	app.UseStatusCodePagesWithRedirects("/erro/{0}");
-	app.UseHsts();
-}
+//if (app.Environment.IsDevelopment())
+//{
+//	app.UseDeveloperExceptionPage();
+//}
+//else
+//{
+//	app.UseExceptionHandler("/erro/500");
+//	app.UseStatusCodePagesWithRedirects("/erro/{0}");
+//	app.UseHsts();
+//}
 
 //app.UseMiddleware<ExceptionMiddleware>();
 

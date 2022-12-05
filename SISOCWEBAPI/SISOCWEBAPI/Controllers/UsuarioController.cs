@@ -57,7 +57,6 @@ namespace SISOCWEBAPI.Controllers
 					return CustomResponse();
 				}
 
-
 				if (_usuarioRepository.Buscar((u) => u.Email == usuarioRegistroDTO.Email).GetAwaiter().GetResult().Any())
 				{
 					NotificarErro("O E-mail informado já possui um cadastro");
@@ -142,7 +141,8 @@ namespace SISOCWEBAPI.Controllers
 							UsuarioID = result.UsuarioID,
 							Email = result.Email,
 							Nome = result.Nome,
-							TipoUsuario = result.TipoUsuarioNavigation
+							TipoUsuario = result.TipoUsuarioNavigation,
+							Setor = result.SetorNavigation,
 						}
 					};
 					return CustomResponse(response);
@@ -171,6 +171,35 @@ namespace SISOCWEBAPI.Controllers
 			return CustomResponse(usuario);
 		}
 
+		[HttpPost]
+		public async Task<IActionResult> Post([FromBody] UsuarioDTO usuarioDTO)
+		{
+			try
+			{
+				if (!ModelState.IsValid) return CustomResponse(ModelState);
+				UsuarioValidation validator = new UsuarioValidation();
+				var resultValidateUser = validator.Validate(_mapper.Map<Usuario>(usuarioDTO));
+
+				if (!resultValidateUser.IsValid)
+				{
+					NotificarErro(resultValidateUser.Errors.FirstOrDefault().ErrorMessage);
+					return CustomResponse();
+				}
+
+				if (_usuarioRepository.Buscar((u) => u.Email == usuarioDTO.Email).GetAwaiter().GetResult().Any())
+				{
+					NotificarErro("O E-mail informado já possui um cadastro");
+					return CustomResponse();
+				}
+				await _usuarioService.Cadastrar(_mapper.Map<Usuario>(usuarioDTO));
+				return CustomResponse();
+			}
+			catch (Exception ex)
+			{
+				NotificarErro(ex.Message);
+				return CustomResponse();
+			}
+		}
 		[HttpPut]
 		public async Task<IActionResult> Put([FromBody] UsuarioDTO usuarioDTO)
 		{

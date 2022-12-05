@@ -40,7 +40,7 @@ namespace SISOC.Data.Repository
 		{
 			try
 			{
-				return await Db.Permissaos.Where(t => t.TipoUsuarioID == tipoUsuarioID).Include(p => p.MenuNavigation).ThenInclude(i => i.Submenus).ToListAsync();
+				return await Db.Permissaos.Where(t => t.TipoUsuarioID == tipoUsuarioID && t.Consultar && t.Cadastrar).Include(p => p.MenuNavigation).ThenInclude(i => i.Submenus).ToListAsync();
 			}
 			catch (Exception ex)
 			{

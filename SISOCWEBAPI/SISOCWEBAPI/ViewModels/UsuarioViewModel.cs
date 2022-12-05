@@ -8,6 +8,7 @@ namespace SISOCWEBAPI.ViewModels
 		public int UsuarioID { get; set; }
 		public string Nome { get; set; }
 		public string Email { get; set; }
-		public TipoUsuario TipoUsuario { get; set; }
+		public TipoUsuario? TipoUsuario { get; set; }
+		public Setor? Setor { get; set; }
 	}
 }

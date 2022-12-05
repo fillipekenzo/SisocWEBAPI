@@ -1,9 +1,14 @@
 ﻿using AutoMapper;
+using CONCURSOMS.Business.Models.Enumerador;
 using Microsoft.AspNetCore.Mvc;
 using SISOC.Business.Interface;
 using SISOC.Business.Models;
+using SISOC.Util.Consulta.Filtros;
+using SISOC.Util.Extensions;
 using SISOCWEBAPI.DTOs;
 using SISOCWEBAPI.ViewModels;
+using System.Reflection;
+using static CONCURSOMS.Business.Models.Enumerador.SISOCEnumerador;
 
 namespace SISOCWEBAPI.Controllers
 {
@@ -13,16 +18,19 @@ namespace SISOCWEBAPI.Controllers
 		private readonly IWebHostEnvironment _env;
 		private readonly IOcorrenciaRepository _ocorrenciaRepository;
 		private readonly IAnexoService _anexoService;
+		private readonly IOcorrenciaService _ocorrenciaService;
 		private readonly IMapper _mapper;
 		public OcorrenciaController(INotificador notificador,
 							IOcorrenciaRepository ocorrenciaRepository,
 							IAnexoService anexoService,
+							IOcorrenciaService ocorrenciaService,
 							IMapper mapper,
 							IWebHostEnvironment env) : base(notificador)
 		{
 			_env = env;
 			_ocorrenciaRepository = ocorrenciaRepository;
 			_anexoService = anexoService;
+			_ocorrenciaService = ocorrenciaService;
 			_mapper = mapper;
 		}
 
@@ -30,6 +38,22 @@ namespace SISOCWEBAPI.Controllers
 		public async Task<ActionResult<List<OcorrenciaViewModel>>> Get()
 		{
 			var ocorrencias = _mapper.Map<List<OcorrenciaViewModel>>(await _ocorrenciaRepository.ObterTodos());
+			Type type = typeof(SISOCEnumerador).GetNestedType("ESituacaoOcorrencia", BindingFlags.Public);
+			List<object> listaEnumeradores = EnumExtensions.ListaObjectEnum(type);
+			List<EnumeradorDTO> listEnvelope = new List<EnumeradorDTO>();
+			foreach (object enumerador in listaEnumeradores)
+			{
+				EnumeradorDTO instancia = new EnumeradorDTO();
+				instancia.Valor = (Int32)enumerador.GetType().GetProperty("Valor").GetValue(enumerador);
+				instancia.Enum = enumerador.GetType().GetProperty("Enum").GetValue(enumerador).ToString();
+				instancia.Texto = enumerador.GetType().GetProperty("Texto").GetValue(enumerador).ToString();
+				listEnvelope.Add(instancia);
+			}
+
+			foreach (var ocorrencia in ocorrencias)
+			{
+				ocorrencia.SituacaoTexto = listEnvelope.Where(e => e.Enum == ocorrencia.Situacao).FirstOrDefault().Texto;
+			}
 			return CustomResponse(ocorrencias);
 		}
 
@@ -46,17 +70,17 @@ namespace SISOCWEBAPI.Controllers
 			}
 			if (ocorrencia.InteracaoOcorrencias.Any())
 			{
-				foreach(var interacao in ocorrencia.InteracaoOcorrencias)
+				foreach (var interacao in ocorrencia.InteracaoOcorrencias)
 				{
 					if (interacao.Anexos.Any())
 					{
 						var anexo = await _anexoService.GetImagem(interacao.Anexos.FirstOrDefault().AnexoID);
 						interacao.Anexos.Clear();
 						interacao.Anexos.Add(anexo);
-					}					
+					}
 				}
 			}
-			
+
 			return CustomResponse(ocorrencia);
 		}
 
@@ -77,6 +101,21 @@ namespace SISOCWEBAPI.Controllers
 					await _anexoService.UploadImagem(anexo, ocorrenciaDTO.File);
 				}
 				return CustomResponse();
+			}
+			catch (Exception ex)
+			{
+				NotificarErro(ex.Message);
+				return CustomResponse();
+			}
+		}
+
+		[HttpPost("postcomfiltros")]
+		public async Task<ActionResult<List<Ocorrencia>>> PostComFiltros([FromBody] OcorrenciaFiltros ocorrenciaFiltros)
+		{
+			try
+			{
+				var ocorrencias = _mapper.Map<List<OcorrenciaViewModel>>(await _ocorrenciaService.BuscarComFiltro(ocorrenciaFiltros));
+				return CustomResponse(ocorrencias);
 			}
 			catch (Exception ex)
 			{
