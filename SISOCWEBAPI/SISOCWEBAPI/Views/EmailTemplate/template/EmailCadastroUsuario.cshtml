@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿@*<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--[if IE]><html xmlns="http://www.w3.org/1999/xhtml" class="ie"><![endif]-->
 <!--[if !IE]><!-->
 <html style="margin: 0;padding: 0;" xmlns="http://www.w3.org/1999/xhtml">
@@ -86,40 +86,59 @@
                                         <div style="mso-line-height-rule: exactly;mso-text-raise: 4px;font-family: Raleway, Roboto, sans-serif;">
                                             <p style="Margin-top: 0;Margin-bottom: 0;font-family: arial,sans-serif;">
                                                 <span class="font-arial">
-                                                    <span style="color: black;">
-                                                        Olá,
-                                                        @Model.NomeMenor
-                                                    </span>
-                                                </span>
-                                            </p>
-
-                                            <p style="Margin-top: 20px;Margin-bottom: 0;font-family: arial,sans-serif;">
-                                                <span class="font-arial">
-                                                    @if (Model.AceiteResponsavel)
+                                                    @if (Model.InscricaoMenorIdade)
                                                     {
-
-                                                        <span style="color:#000000; text-align:justify">
-                                                            Sua inscrição no Concurso para criação do Mascote da Educação Fiscal do Mato Grosso do Sul,
-                                                            <strong>Foi</strong> autorizada pelo seu representante legal, <strong> @Model.NomeResponsavel</strong>
+                                                        <span style="color: black;">
+                                                            Prezado(a) representante legal,<b> @Model.NomeResponsavel</b>
                                                         </span>
-
                                                     }
                                                     else
                                                     {
-                                                        <span style="color:#000000; text-align:justify">
-                                                            Sua inscrição no Concurso para criação do Mascote da Educação Fiscal do Mato Grosso do Sul,
-                                                            <strong>Não foi</strong> autorizada pelo seu representante legal, <strong> @Model.NomeResponsavel</strong>
+                                                        <span style="color: black;">
+                                                            Prezado(a) participante,<b> @Model.NomeParticipante</b>
                                                         </span>
                                                     }
                                                 </span>
                                             </p>
-                                            <p style="Margin-top: 20px;Margin-bottom: 0;font-family: arial,sans-serif;">
-                                                <span class="font-arial">
-                                                    <span style="color:#000000">
-                                                        <b>É importante ressaltar que este procedimento se faz necessário para a sua segurança e o melhor funcionamento do sistema.</b>
+
+                                            <p style="Margin-top: 20px; Margin-bottom: 0; font-family: arial,sans-serif; color: black;">
+                                                @if (Model.InscricaoMenorIdade)
+                                                {
+                                                    <span class="font-arial">
+                                                        O fim das inscrições para o concurso do <b>"Mascote da Educação Fiscal de Mato Grosso do Sul"</b> se aproxima, @Model.DataFimInscricao.
+                                                        <br />
+                                                        <br />
+                                                        Portanto, lembramos que o cadastro do participante, <b>@Model.NomeParticipante</b>, no sistema ainda está pendente (desenho não anexado). Não perca a chance de ganhar um Macbook Air!
+                                                        <br />
+                                                        <br />
+                                                        Solicite o login do participante no <a href=@Model.Link target="_blank">Concurso Mascote da Educação Fiscal de Mato Grosso do Sul</a>, anexe o desenho e boa sorte!
+                                                        <br />
+                                                        <br />
+                                                        Att, Comissão organizadora.
+
                                                     </span>
-                                                </span>
+                                                }
+                                                else
+                                                {
+                                            <span class="font-arial">
+                                                O fim das inscrições para o concurso do <b>"Mascote da Educação Fiscal de Mato Grosso do Sul"</b> se aproxima,  @Model.DataFimInscricao.
+                                                <br />
+                                                <br />
+                                                Portanto, lembramos que seu cadastro no sistema ainda está pendente (desenho não anexado). Não perca a chance de ganhar um Macbook Air!
+                                                <br />
+                                                <br />
+                                                Faça seu login no <a href=@Model.Link target="_blank">Concurso Mascote da Educação Fiscal de Mato Grosso do Sul</a>, anexe seu desenho e boa sorte!
+                                                <br />
+                                                <br />
+                                                Atenciosamente,
+                                                <br />
+                                                <br />
+                                                Comissão Organizadora.
+                                            </span>
+                                                }
+
                                             </p>
+
                                         </div>
                                     </div>
 
@@ -208,4 +227,4 @@
 
 
 </body>
-</html>
+</html>*@

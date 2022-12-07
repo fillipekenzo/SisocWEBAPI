@@ -57,7 +57,7 @@ namespace SISOC.Business.Service
 						Hora = DateTime.Now.ToShortTimeString(),
 						CidIFMS = inlineIFMS.ContentId,
 					};
-					string template = _email.GerarTemplate("EmailLinkConfirmacao.cshtml");
+					string template = _email.GerarTemplate("EmailNotificacaoOcorrencia.cshtml");
 					string emailBody = await _email.RunCompile(template, model);
 					_email.Enviar(new List<string>() { usuario.Email }, new List<string>() { }, new List<string>() { }, "Teste", emailBody, linkedResources);
 
