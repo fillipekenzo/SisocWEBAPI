@@ -43,6 +43,12 @@ namespace SISOC.Business.Service
 				return usuario;
 			}
 		}
+		public async Task<bool> PostUsuario(Usuario usuario)
+		{
+			usuario.Senha = Cripto.HashPassword(usuario.Senha);
+			await _usuarioRepository.Adicionar(usuario);
+			return true;
+		}
 
 		public Task<List<Usuario>> GetAll()
 		{

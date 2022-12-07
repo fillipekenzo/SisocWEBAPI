@@ -6,6 +6,7 @@ namespace SISOC.Business.Interface
 	{
 		Task<bool> Cadastrar(Usuario usuario);
 		Task<Usuario> Login(Usuario usuarioLogin);
+		Task<bool> PostUsuario(Usuario usuario);
 		Task<List<Usuario>> GetAll();
 	}
 }

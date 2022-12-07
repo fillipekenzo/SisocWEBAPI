@@ -191,7 +191,7 @@ namespace SISOCWEBAPI.Controllers
 					NotificarErro("O E-mail informado já possui um cadastro");
 					return CustomResponse();
 				}
-				await _usuarioService.Cadastrar(_mapper.Map<Usuario>(usuarioDTO));
+				await _usuarioService.PostUsuario(_mapper.Map<Usuario>(usuarioDTO));
 				return CustomResponse();
 			}
 			catch (Exception ex)

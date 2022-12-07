@@ -7,5 +7,6 @@ namespace SISOC.Business.Interface
 	{
 		Task<bool> Post(Ocorrencia ocorrencia);
 		Task<IEnumerable<Ocorrencia>> BuscarComFiltro(OcorrenciaFiltros concurso);
+		Task EnviarEmailAtendimentoSetor(Ocorrencia ocorrencia);
 	}
 }

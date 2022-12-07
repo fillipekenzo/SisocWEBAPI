@@ -106,18 +106,18 @@ namespace SISOC.Data.Context
 		private void SeedMenuSubmenu(ModelBuilder builder)
 		{
 			builder.Entity<Menu>().HasData(
-				new Menu() { MenuID = 1, Nome = "Menu", NavegarURL = "menu", Ativo = true, Ordem = 1, DataHoraCadastro = DateTime.Now },
-				new Menu() { MenuID = 2, Nome = "Setor", NavegarURL = "setor", Ativo = true, Ordem = 2, DataHoraCadastro = DateTime.Now },
-				new Menu() { MenuID = 3, Nome = "Permissão", NavegarURL = "permissao", Ativo = true, Ordem = 3, DataHoraCadastro = DateTime.Now },
-				new Menu() { MenuID = 4, Nome = "Tipo Ocorrência", NavegarURL = "tipo-ocorrencia", Ativo = true, Ordem = 4, DataHoraCadastro = DateTime.Now },
-				new Menu() { MenuID = 5, Nome = "Tipo Usuário", NavegarURL = "tipo-usuario", Ativo = true, Ordem = 5, DataHoraCadastro = DateTime.Now },
-				new Menu() { MenuID = 6, Nome = "Usuário", NavegarURL = "usuario", Ativo = true, Ordem = 6, DataHoraCadastro = DateTime.Now },
-				new Menu() { MenuID = 7, Nome = "Ocorrência", NavegarURL = "ocorrencia", Ativo = true, Ordem = 7, DataHoraCadastro = DateTime.Now }
+				new Menu() { MenuID = 1, Nome = "Menu", NavegarURL = "/menu", Ativo = true, Ordem = 1, DataHoraCadastro = DateTime.Now },
+				new Menu() { MenuID = 2, Nome = "Setor", NavegarURL = "/setor", Ativo = true, Ordem = 2, DataHoraCadastro = DateTime.Now },
+				new Menu() { MenuID = 3, Nome = "Permissão", NavegarURL = "/permissao", Ativo = true, Ordem = 3, DataHoraCadastro = DateTime.Now },
+				new Menu() { MenuID = 4, Nome = "Tipo Ocorrência", NavegarURL = "/tipo-ocorrencia", Ativo = true, Ordem = 4, DataHoraCadastro = DateTime.Now },
+				new Menu() { MenuID = 5, Nome = "Tipo Usuário", NavegarURL = "/tipo-usuario", Ativo = true, Ordem = 5, DataHoraCadastro = DateTime.Now },
+				new Menu() { MenuID = 6, Nome = "Usuário", NavegarURL = "/usuario", Ativo = true, Ordem = 6, DataHoraCadastro = DateTime.Now },
+				new Menu() { MenuID = 7, Nome = "Ocorrência", NavegarURL = "/ocorrencia", Ativo = true, Ordem = 7, DataHoraCadastro = DateTime.Now }
 				);
 
 			builder.Entity<Submenu>().HasData(
-				new Submenu() { SubmenuID = 1, MenuID = 7, Nome = "Cadastrar", NavegarURL = "cadastrar", Ativo = true, Ordem = 1, DataHoraCadastro = DateTime.Now },
-				new Submenu() { SubmenuID = 2, MenuID = 7, Nome = "Consultar", NavegarURL = "consultar", Ativo = true, Ordem = 2, DataHoraCadastro = DateTime.Now }
+				new Submenu() { SubmenuID = 1, MenuID = 7, Nome = "Cadastrar", NavegarURL = "/cadastrar", Ativo = true, Ordem = 1, DataHoraCadastro = DateTime.Now },
+				new Submenu() { SubmenuID = 2, MenuID = 7, Nome = "Consultar", NavegarURL = "/consultar", Ativo = true, Ordem = 2, DataHoraCadastro = DateTime.Now }
 				);
 		}
 

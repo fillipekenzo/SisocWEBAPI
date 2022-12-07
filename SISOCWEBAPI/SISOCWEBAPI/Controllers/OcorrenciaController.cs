@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using CONCURSOMS.Business.Models.Enumerador;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using SISOC.Business.Interface;
 using SISOC.Business.Models;
 using SISOC.Util.Consulta.Filtros;
 using SISOC.Util.Extensions;
+using SISOC.Util.Mail;
 using SISOCWEBAPI.DTOs;
 using SISOCWEBAPI.ViewModels;
 using System.Reflection;
@@ -20,6 +22,7 @@ namespace SISOCWEBAPI.Controllers
 		private readonly IAnexoService _anexoService;
 		private readonly IOcorrenciaService _ocorrenciaService;
 		private readonly IMapper _mapper;
+		
 		public OcorrenciaController(INotificador notificador,
 							IOcorrenciaRepository ocorrenciaRepository,
 							IAnexoService anexoService,
@@ -32,6 +35,7 @@ namespace SISOCWEBAPI.Controllers
 			_anexoService = anexoService;
 			_ocorrenciaService = ocorrenciaService;
 			_mapper = mapper;
+			
 		}
 
 		[HttpGet]
@@ -100,6 +104,8 @@ namespace SISOCWEBAPI.Controllers
 					};
 					await _anexoService.UploadImagem(anexo, ocorrenciaDTO.File);
 				}
+				await _ocorrenciaService.EnviarEmailAtendimentoSetor(ocorrencia);
+
 				return CustomResponse();
 			}
 			catch (Exception ex)
