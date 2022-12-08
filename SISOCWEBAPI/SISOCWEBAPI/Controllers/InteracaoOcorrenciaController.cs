@@ -14,16 +14,19 @@ namespace SISOCWEBAPI.Controllers
 		private readonly IWebHostEnvironment _env;
 		private readonly IInteracaoOcorrenciaRepository _interacaoOcorrenciaRepository;
 		private readonly IAnexoService _anexoService;
+		private readonly IInteracaoOcorrenciaService _interacaoOcorrenciaService;
 		private readonly IMapper _mapper;
 		public InteracaoOcorrenciaController(INotificador notificador,
 							IInteracaoOcorrenciaRepository interacaoOcorrenciaRepository,
 							IAnexoService anexoService,
+							IInteracaoOcorrenciaService interacaoOcorrenciaService,
 							IMapper mapper,
 							IWebHostEnvironment env) : base(notificador)
 		{
 			_env = env;
 			_interacaoOcorrenciaRepository = interacaoOcorrenciaRepository;
 			_anexoService = anexoService;
+			_interacaoOcorrenciaService = interacaoOcorrenciaService;
 			_mapper = mapper;
 		}
 		[HttpGet]
@@ -57,6 +60,8 @@ namespace SISOCWEBAPI.Controllers
 					};
 					await _anexoService.UploadImagem(anexo, interacaoOcorrenciaDTO.File);
 				}
+
+				await _interacaoOcorrenciaService.EnviarEmailAtendimentoSetorInteracaoOcorrencia(ocorrenciaReturn);
 				return CustomResponse();
 			}
 			catch (Exception ex)

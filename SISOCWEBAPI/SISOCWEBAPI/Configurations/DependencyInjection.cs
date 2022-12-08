@@ -29,6 +29,7 @@ namespace SISOCWEBAPI.Configurations
 			services.AddScoped<IUsuarioService, UsuarioService>();
 			services.AddScoped<IAnexoService, AnexoService>();
 			services.AddScoped<IOcorrenciaService, OcorrenciaService>();
+			services.AddScoped<IInteracaoOcorrenciaService, InteracaoOcorrenciaService>();
 
 			return services;
 		}

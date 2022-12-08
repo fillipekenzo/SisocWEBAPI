@@ -41,29 +41,47 @@ namespace SISOC.Business.Service
 
 		public async Task EnviarEmailAtendimentoSetor(Ocorrencia ocorrencia)
 		{
-			var tipoUsuarioAtendimento = _tipoUsuarioRepository.Buscar(t => t.Nome.ToUpper().Contains("ATENDIMENTO")).Result.FirstOrDefault();
-			var usuariosAtendimentoSetor = _usuarioRepository.Buscar(u => u.TipoUsuarioID == tipoUsuarioAtendimento.TipoUsuarioID && u.SetorID == ocorrencia.SetorID).Result;
-			if(usuariosAtendimentoSetor != null)
+			try
 			{
-				LinkedResource inlineIFMS = _email.CarregarLogoIFMS();
-				List<LinkedResource> linkedResources = new List<LinkedResource>() { { inlineIFMS } };
-				foreach (var usuario in usuariosAtendimentoSetor)
+				var tipoUsuarioAtendimento = _tipoUsuarioRepository.Buscar(t => t.Nome.ToUpper().Contains("ATENDIMENTO")).Result.FirstOrDefault();
+				var usuariosAtendimentoSetor = _usuarioRepository.Buscar(u => u.TipoUsuarioID == tipoUsuarioAtendimento.TipoUsuarioID && u.SetorID == ocorrencia.SetorID).Result;
+				if (usuariosAtendimentoSetor.Count() > 0)
 				{
-					var model = new
+					var listaEmails = new List<string>();
+					foreach (var usuario in usuariosAtendimentoSetor)
 					{
-						Email = usuario.Email,
-						Ocorrencia = ocorrencia,
-						Data = DateTime.Now.ToShortDateString(),
-						Hora = DateTime.Now.ToShortTimeString(),
-						CidIFMS = inlineIFMS.ContentId,
-					};
-					string template = _email.GerarTemplate("EmailNotificacaoOcorrencia.cshtml");
-					string emailBody = await _email.RunCompile(template, model);
-					_email.Enviar(new List<string>() { usuario.Email }, new List<string>() { }, new List<string>() { }, "Teste", emailBody, linkedResources);
+						listaEmails.Add(usuario.Email);
+					}
+					string bodyHTML = $"<div dir=\"ltr\"><div class=\"gmail_quote\"><strong><h1 style=\"font-family:&quot;Arial&quot;,&quot;sans-serif&quot;\">Ocorrência: #{ocorrencia.OcorrenciaID} - {ocorrencia.Assunto} foi adicionada ao seu Setor na Data: {DateTime.UtcNow.ToShortDateString()} - {DateTime.UtcNow.ToShortTimeString()}</h1></strong></div></br><a style=\"font-family:&quot;Arial&quot;,&quot;sans-serif&quot;\" href=\"https://sisocsite.vercel.app/#/ocorrencia/visualizar/{ocorrencia.OcorrenciaID}\">Acesse o sistema para visualizar</a></div>";
 
+					string emailBody = $"Ocorrência: #{ocorrencia.OcorrenciaID} - {ocorrencia.Assunto} foi adicionada ao seu Setor na Data: {DateTime.UtcNow.ToShortDateString()} - {DateTime.UtcNow.ToShortTimeString()}. Acesse o sistema para verificar.";
+					_email.Enviar(listaEmails, new List<string>() { }, new List<string>() { }, "SISOC - Nova Ocorrência adicionada", bodyHTML);
 				}
 			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+		}
 
+		public async Task EnviarEmailEditarOcorrencia(Ocorrencia ocorrencia, string situacaoNova)
+		{
+			try
+			{
+				var usuarioCadastro = _usuarioRepository.ObterPorID(ocorrencia.UsuarioCadastroID).Result;
+				var usuarioAtribuido = _usuarioRepository.ObterPorID(ocorrencia.UsuarioAtribuidoID.Value).Result;
+
+				if (usuarioCadastro != null)
+				{
+					string bodyHTML = $"<div dir=\"ltr\"><div class=\"gmail_quote\"><strong><h1 style=\"font-family:&quot;Arial&quot;,&quot;sans-serif&quot;\">A situação da Ocorrência: #{ocorrencia.OcorrenciaID} - {ocorrencia.Assunto}</div></br><div class=\"gmail_quote\"><strong><h1 style=\"font-family:&quot;Arial&quot;,&quot;sans-serif&quot;\">Foi alterada para {situacaoNova} por {usuarioAtribuido.Nome} na Data: {DateTime.UtcNow.ToShortDateString()} - {DateTime.UtcNow.ToShortTimeString()}</h1></strong></div></br><a style=\"font-family:&quot;Arial&quot;,&quot;sans-serif&quot;\" href=\"https://sisocsite.vercel.app/#/ocorrencia/visualizar/{ocorrencia.OcorrenciaID}\">Acesse o sistema para visualizar</a></div>";
+
+					_email.Enviar(new List<string>() { usuarioCadastro.Email }, new List<string>() { }, new List<string>() { }, "SISOC - Ocorrência Atualizada", bodyHTML);
+				}
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
 		}
 
 		public async Task<IEnumerable<Ocorrencia>> BuscarComFiltro(OcorrenciaFiltros concurso)

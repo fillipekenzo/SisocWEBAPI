@@ -13,6 +13,11 @@ namespace CONCURSOMS.Business.Models.Enumerador
 			[Description("Resolvido")]
 			Resolvido,
 		}
+		public enum ESituacaoOcorrenciaNova
+		{
+			[Description("Aberto")]
+			Aberto,
+		}
 		public enum EUrgenciaOcorrencia
 		{
 			[Description("Alta")]

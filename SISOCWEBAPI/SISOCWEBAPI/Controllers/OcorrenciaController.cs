@@ -104,7 +104,7 @@ namespace SISOCWEBAPI.Controllers
 					};
 					await _anexoService.UploadImagem(anexo, ocorrenciaDTO.File);
 				}
-				await _ocorrenciaService.EnviarEmailAtendimentoSetor(ocorrencia);
+				await _ocorrenciaService.EnviarEmailAtendimentoSetor(ocorrenciaReturn);
 
 				return CustomResponse();
 			}
@@ -121,6 +121,22 @@ namespace SISOCWEBAPI.Controllers
 			try
 			{
 				var ocorrencias = _mapper.Map<List<OcorrenciaViewModel>>(await _ocorrenciaService.BuscarComFiltro(ocorrenciaFiltros));
+				Type type = typeof(SISOCEnumerador).GetNestedType("ESituacaoOcorrencia", BindingFlags.Public);
+				List<object> listaEnumeradores = EnumExtensions.ListaObjectEnum(type);
+				List<EnumeradorDTO> listEnvelope = new List<EnumeradorDTO>();
+				foreach (object enumerador in listaEnumeradores)
+				{
+					EnumeradorDTO instancia = new EnumeradorDTO();
+					instancia.Valor = (Int32)enumerador.GetType().GetProperty("Valor").GetValue(enumerador);
+					instancia.Enum = enumerador.GetType().GetProperty("Enum").GetValue(enumerador).ToString();
+					instancia.Texto = enumerador.GetType().GetProperty("Texto").GetValue(enumerador).ToString();
+					listEnvelope.Add(instancia);
+				}
+
+				foreach (var ocorrencia in ocorrencias)
+				{
+					ocorrencia.SituacaoTexto = listEnvelope.Where(e => e.Enum == ocorrencia.Situacao).FirstOrDefault().Texto;
+				}
 				return CustomResponse(ocorrencias);
 			}
 			catch (Exception ex)
@@ -136,6 +152,23 @@ namespace SISOCWEBAPI.Controllers
 			try
 			{
 				await _ocorrenciaRepository.Atualizar(_mapper.Map<Ocorrencia>(ocorrenciaDTO));
+				Type type = typeof(SISOCEnumerador).GetNestedType("ESituacaoOcorrencia", BindingFlags.Public);
+				List<object> listaEnumeradores = EnumExtensions.ListaObjectEnum(type);
+				List<EnumeradorDTO> listEnvelope = new List<EnumeradorDTO>();
+
+				foreach (object enumerador in listaEnumeradores)
+				{
+					EnumeradorDTO instancia = new EnumeradorDTO();
+					instancia.Valor = (Int32)enumerador.GetType().GetProperty("Valor").GetValue(enumerador);
+					instancia.Enum = enumerador.GetType().GetProperty("Enum").GetValue(enumerador).ToString();
+					instancia.Texto = enumerador.GetType().GetProperty("Texto").GetValue(enumerador).ToString();
+					listEnvelope.Add(instancia);
+				}
+
+				var situacaoTexto = listEnvelope.Where(e => e.Enum == ocorrenciaDTO.SituacaoENUM).FirstOrDefault().Texto;
+
+				await _ocorrenciaService.EnviarEmailEditarOcorrencia(_mapper.Map<Ocorrencia>(ocorrenciaDTO), situacaoTexto);
+
 				return CustomResponse();
 			}
 			catch (Exception ex)
