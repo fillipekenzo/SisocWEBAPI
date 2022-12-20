@@ -71,9 +71,11 @@ namespace SISOC.Data.Context
 		private void SeedSetor(ModelBuilder builder)
 		{
 			builder.Entity<Setor>().HasData(
-				new Setor() { SetorID = 1, Nome = "Conselho Superior", Sigla = "COSUP", DataHoraCadastro = DateTime.Now },
-				new Setor() { SetorID = 2, Nome = "Reitoria", Sigla = "RTRIA", DataHoraCadastro = DateTime.Now },
-				new Setor() { SetorID = 3, Nome = "Diretoria de Ensino", Sigla = "DIREN", DataHoraCadastro = DateTime.Now }
+				new Setor() { SetorID = 1, Nome = "Reitoria", Sigla = "RTRIA", DataHoraCadastro = DateTime.Now },
+				new Setor() { SetorID = 2, Nome = "Direção Geral", Sigla = "DIRGE", DataHoraCadastro = DateTime.Now },
+				new Setor() { SetorID = 3, Nome = "Diretoria de Ensino", Sigla = "DIREN", DataHoraCadastro = DateTime.Now },
+				new Setor() { SetorID = 4, Nome = "Diretoria de Pesquisa, Extensão e Relações Internacionais", Sigla = "DIRER", DataHoraCadastro = DateTime.Now },
+				new Setor() { SetorID = 5, Nome = "Diretoria de Administração", Sigla = "DIRAD", DataHoraCadastro = DateTime.Now }
 				);
 		}
 
@@ -83,8 +85,8 @@ namespace SISOC.Data.Context
 				new TipoUsuario() { TipoUsuarioID = 1, Nome = "ADMIN", Descricao = "Usuário Admnistrador", DataHoraCadastro = DateTime.Now },
 				new TipoUsuario() { TipoUsuarioID = 2, Nome = "ESTUDANTE", Descricao = "Usuário Estudante", DataHoraCadastro = DateTime.Now },
 				new TipoUsuario() { TipoUsuarioID = 3, Nome = "DOCENTE", Descricao = "Usuário Docente", DataHoraCadastro = DateTime.Now },
-				new TipoUsuario() { TipoUsuarioID = 4, Nome = "ATENDIMENTO", Descricao = "Usuário responsável por atender as Ocorrências", DataHoraCadastro = DateTime.Now },
-				new TipoUsuario() { TipoUsuarioID = 5, Nome = "SUPORTE", Descricao = "Usuário com permissões para criar usuários", DataHoraCadastro = DateTime.Now }
+				new TipoUsuario() { TipoUsuarioID = 4, Nome = "ATENDIMENTO", Descricao = "Usuário responsável por atender as Ocorrências", DataHoraCadastro = DateTime.Now }
+				//new TipoUsuario() { TipoUsuarioID = 5, Nome = "SUPORTE", Descricao = "Usuário com permissões para criar usuários", DataHoraCadastro = DateTime.Now }
 				);
 		}
 
@@ -117,7 +119,8 @@ namespace SISOC.Data.Context
 
 			builder.Entity<Submenu>().HasData(
 				new Submenu() { SubmenuID = 1, MenuID = 7, Nome = "Cadastrar", NavegarURL = "/cadastrar", Ativo = true, Ordem = 1, DataHoraCadastro = DateTime.Now },
-				new Submenu() { SubmenuID = 2, MenuID = 7, Nome = "Consultar", NavegarURL = "/consultar", Ativo = true, Ordem = 2, DataHoraCadastro = DateTime.Now }
+				new Submenu() { SubmenuID = 2, MenuID = 7, Nome = "Consultar", NavegarURL = "/consultar", Ativo = true, Ordem = 2, DataHoraCadastro = DateTime.Now },
+				new Submenu() { SubmenuID = 3, MenuID = 7, Nome = "Painel", NavegarURL = "/painel", Ativo = true, Ordem = 2, DataHoraCadastro = DateTime.Now }
 				);
 		}
 
@@ -136,10 +139,10 @@ namespace SISOC.Data.Context
 
 				new Permissao() { PermissaoID = 9, MenuID = 7, SubmenuID = 1, Cadastrar = true, Consultar = true, Editar = true, Excluir = false, TipoUsuarioID = 3, DataHoraCadastro = DateTime.Now },
 
-				new Permissao() { PermissaoID = 10, MenuID = 7, SubmenuID = 1, Cadastrar = true, Consultar = true, Editar = true, Excluir = false, TipoUsuarioID = 4, DataHoraCadastro = DateTime.Now },
+				new Permissao() { PermissaoID = 10, MenuID = 7, SubmenuID = 1, Cadastrar = true, Consultar = true, Editar = true, Excluir = false, TipoUsuarioID = 4, DataHoraCadastro = DateTime.Now }
 
-				new Permissao() { PermissaoID = 11, MenuID = 6, SubmenuID = 1, Cadastrar = true, Consultar = true, Editar = true, Excluir = false, TipoUsuarioID = 5, DataHoraCadastro = DateTime.Now },
-				new Permissao() { PermissaoID = 12, MenuID = 7, SubmenuID = 1, Cadastrar = true, Consultar = true, Editar = true, Excluir = false, TipoUsuarioID = 5, DataHoraCadastro = DateTime.Now }
+				//new Permissao() { PermissaoID = 11, MenuID = 6, SubmenuID = 1, Cadastrar = true, Consultar = true, Editar = true, Excluir = false, TipoUsuarioID = 5, DataHoraCadastro = DateTime.Now },
+				//new Permissao() { PermissaoID = 12, MenuID = 7, SubmenuID = 1, Cadastrar = true, Consultar = true, Editar = true, Excluir = false, TipoUsuarioID = 5, DataHoraCadastro = DateTime.Now }
 
 				);
 		}
@@ -147,10 +150,12 @@ namespace SISOC.Data.Context
 		private void SeedTipoOcorrencia(ModelBuilder builder)
 		{
 			builder.Entity<TipoOcorrencia>().HasData(
-				new TipoOcorrencia() { TipoOcorrenciaID = 1, Nome = "Aluno", Descricao = "Incidentes com Alunos", DataHoraCadastro = DateTime.Now },
-				new TipoOcorrencia() { TipoOcorrenciaID = 2, Nome = "Campus", Descricao = "Incidentes com o Câmpus", DataHoraCadastro = DateTime.Now },
-				new TipoOcorrencia() { TipoOcorrenciaID = 3, Nome = "Sala de Aula", Descricao = "Incidentes dentro da Sala de Aula", DataHoraCadastro = DateTime.Now },
-				new TipoOcorrencia() { TipoOcorrenciaID = 4, Nome = "Docente", Descricao = "Incidentes com Docente", DataHoraCadastro = DateTime.Now }
+				new TipoOcorrencia() { TipoOcorrenciaID = 1, Nome = "Sala de Aula", Descricao = "Incidentes dentro da Sala de Aula", DataHoraCadastro = DateTime.Now },
+				new TipoOcorrencia() { TipoOcorrenciaID = 2, Nome = "Aluno", Descricao = "Incidentes com Alunos", DataHoraCadastro = DateTime.Now },
+				new TipoOcorrencia() { TipoOcorrenciaID = 3, Nome = "Docente", Descricao = "Incidentes com Docente", DataHoraCadastro = DateTime.Now },
+				new TipoOcorrencia() { TipoOcorrenciaID = 4, Nome = "Câmpus", Descricao = "Incidentes dentro das extensões do Câmpus", DataHoraCadastro = DateTime.Now },
+				new TipoOcorrencia() { TipoOcorrenciaID = 5, Nome = "Ambiente Externo", Descricao = "Incidentes fora das extensões do Câmpus", DataHoraCadastro = DateTime.Now },
+				new TipoOcorrencia() { TipoOcorrenciaID = 6, Nome = "Infraestrutura", Descricao = "Incidentes relacionados a infraestrutura do Câmpus", DataHoraCadastro = DateTime.Now }
 				);
 		}
 	}
