@@ -52,7 +52,7 @@ namespace SISOC.Business.Service
 					{
 						listaEmails.Add(usuario.Email);
 					}
-					string bodyHTML = $"<div dir=\"ltr\"><div class=\"gmail_quote\"><strong><h1 style=\"font-family:&quot;Arial&quot;,&quot;sans-serif&quot;\">Ocorrência: #{ocorrencia.OcorrenciaID} - {ocorrencia.Assunto} foi adicionada ao seu Setor na Data: {DateTime.UtcNow.ToShortDateString()} - {DateTime.UtcNow.ToShortTimeString()}</h1></strong></div></br><a style=\"font-family:&quot;Arial&quot;,&quot;sans-serif&quot;\" href=\"https://sisocsite.vercel.app/#/ocorrencia/visualizar/{ocorrencia.OcorrenciaID}\">Acesse o sistema para visualizar</a></div>";
+					string bodyHTML = $"<div dir=\"ltr\"><div class=\"gmail_quote\"><strong><h1 style=\"font-family:&quot;Arial&quot;,&quot;sans-serif&quot;\">Ocorrência: #{ocorrencia.OcorrenciaID} - {ocorrencia.Assunto} foi adicionada ao seu Setor na Data: {DateTime.UtcNow.ToString("dd/MM/yyyy")} - {DateTime.UtcNow.ToShortTimeString()}</h1></strong></div></br><a style=\"font-family:&quot;Arial&quot;,&quot;sans-serif&quot;\" href=\"https://sisocsite.vercel.app/#/ocorrencia/visualizar/{ocorrencia.OcorrenciaID}\">Acesse o sistema para visualizar</a></div>";
 
 					string emailBody = $"Ocorrência: #{ocorrencia.OcorrenciaID} - {ocorrencia.Assunto} foi adicionada ao seu Setor na Data: {DateTime.UtcNow.ToShortDateString()} - {DateTime.UtcNow.ToShortTimeString()}. Acesse o sistema para verificar.";
 					_email.Enviar(listaEmails, new List<string>() { }, new List<string>() { }, "SISOC - Nova Ocorrência adicionada", bodyHTML);
@@ -73,7 +73,7 @@ namespace SISOC.Business.Service
 
 				if (usuarioCadastro != null)
 				{
-					string bodyHTML = $"<div dir=\"ltr\"><div class=\"gmail_quote\"><strong><h1 style=\"font-family:&quot;Arial&quot;,&quot;sans-serif&quot;\">A situação da Ocorrência: #{ocorrencia.OcorrenciaID} - {ocorrencia.Assunto}</div></br><div class=\"gmail_quote\"><strong><h1 style=\"font-family:&quot;Arial&quot;,&quot;sans-serif&quot;\">Foi alterada para {situacaoNova} por {usuarioAtribuido.Nome} na Data: {DateTime.UtcNow.ToShortDateString()} - {DateTime.UtcNow.ToShortTimeString()}</h1></strong></div></br><a style=\"font-family:&quot;Arial&quot;,&quot;sans-serif&quot;\" href=\"https://sisocsite.vercel.app/#/ocorrencia/visualizar/{ocorrencia.OcorrenciaID}\">Acesse o sistema para visualizar</a></div>";
+					string bodyHTML = $"<div dir=\"ltr\"><div class=\"gmail_quote\"><strong><h1 style=\"font-family:&quot;Arial&quot;,&quot;sans-serif&quot;\">A situação da Ocorrência: #{ocorrencia.OcorrenciaID} - {ocorrencia.Assunto}</div></br><div class=\"gmail_quote\"><strong><h1 style=\"font-family:&quot;Arial&quot;,&quot;sans-serif&quot;\">Foi alterada para {situacaoNova} por {usuarioAtribuido.Nome} na Data: {DateTime.UtcNow.ToString("dd/MM/yyyy")} - {DateTime.UtcNow.ToShortTimeString()}</h1></strong></div></br><a style=\"font-family:&quot;Arial&quot;,&quot;sans-serif&quot;\" href=\"https://sisocsite.vercel.app/#/ocorrencia/visualizar/{ocorrencia.OcorrenciaID}\">Acesse o sistema para visualizar</a></div>";
 
 					_email.Enviar(new List<string>() { usuarioCadastro.Email }, new List<string>() { }, new List<string>() { }, "SISOC - Ocorrência Atualizada", bodyHTML);
 				}

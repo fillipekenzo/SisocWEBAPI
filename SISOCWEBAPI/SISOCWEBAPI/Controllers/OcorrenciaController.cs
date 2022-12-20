@@ -137,7 +137,7 @@ namespace SISOCWEBAPI.Controllers
 				{
 					ocorrencia.SituacaoTexto = listEnvelope.Where(e => e.Enum == ocorrencia.Situacao).FirstOrDefault().Texto;
 				}
-				return CustomResponse(ocorrencias);
+				return CustomResponse(ocorrencias.OrderByDescending(o=>o.OcorrenciaID));
 			}
 			catch (Exception ex)
 			{
